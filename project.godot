@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Hedgehog's Farm"
-run/main_scene="uid://bst0tyhkeacme"
+run/main_scene="uid://6un8e28t3bop"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [display]
