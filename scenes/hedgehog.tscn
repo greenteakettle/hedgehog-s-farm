@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://bb4hbevunn53d"]
+
+[ext_resource type="Script" uid="uid://cd70v3e3w1bdp" path="res://scripts/hedgehog.gd" id="1_smy4v"]
+[ext_resource type="Texture2D" uid="uid://h1nhaedb30oq" path="res://assets/pixel_art_hedgehog/idle/idle.png" id="2_d8tr7"]
+[ext_resource type="Texture2D" uid="uid://86ktv0d7xwde" path="res://assets/pixel_art_hedgehog/move/move.png" id="2_uksvm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ti5rv"]
+atlas = ExtResource("2_d8tr7")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppswi"]
+atlas = ExtResource("2_d8tr7")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8tr7"]
+atlas = ExtResource("2_uksvm")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ri3m"]
+atlas = ExtResource("2_uksvm")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wivci"]
+atlas = ExtResource("2_uksvm")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mi23j"]
+atlas = ExtResource("2_uksvm")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpidu"]
+atlas = ExtResource("2_uksvm")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjq8v"]
+atlas = ExtResource("2_uksvm")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ti5rv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ti5rv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppswi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8tr7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri3m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wivci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mi23j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpidu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjq8v")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[node name="Hedgehog" type="CharacterBody2D"]
+script = ExtResource("1_smy4v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(7.88578, 7.88578)
+scale = Vector2(0.676185, 0.676185)
+sprite_frames = SubResource("SpriteFrames_ti5rv")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://6un8e28t3bop"]
+
+[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="1_yqeox"]
+
+[node name="Ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -704.0
+offset_bottom = -384.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.20442, 3.0134)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 72.4
+offset_top = 23.8932
+offset_right = 222.4
+offset_bottom = 37.8932
+scale = Vector2(1.17286, 1.17286)
+theme_override_fonts/font = ExtResource("1_yqeox")
+theme_override_font_sizes/font_size = 16
+text = "hedgehog's harvest"
