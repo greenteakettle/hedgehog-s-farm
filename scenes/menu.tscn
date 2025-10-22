@@ -203,7 +203,7 @@ script = ExtResource("4_mhnvy")
 
 [node name="Hedgehog" parent="." instance=ExtResource("8_13sgg")]
 z_index = 3
-position = Vector2(256, 64.0009)
+position = Vector2(254, 80.001114)
 scale = Vector2(3.95384, 3.95384)
 autonomous_mode = true
 
@@ -211,9 +211,9 @@ autonomous_mode = true
 z_index = 2
 layout_mode = 0
 offset_left = 256.0
-offset_top = 127.002
+offset_top = 143.002
 offset_right = 362.0
-offset_bottom = 249.002
+offset_bottom = 265.002
 scale = Vector2(4.81042, 2.33174)
 texture = SubResource("AtlasTexture_vjb58")
 
@@ -230,11 +230,11 @@ text = "hedgehog's farm"
 
 [node name="PlayButton" type="TextureButton" parent="MenuUI"]
 layout_mode = 0
-offset_left = 20.0927
-offset_top = 55.0992
-offset_right = 110.093
-offset_bottom = 82.0992
-scale = Vector2(0.732427, 1.36162)
+offset_left = 8.31528
+offset_top = 48.462208
+offset_right = 98.31528
+offset_bottom = 75.462204
+scale = Vector2(0.99695, 1.85338)
 texture_normal = SubResource("AtlasTexture_mhnvy")
 texture_pressed = SubResource("AtlasTexture_4ytvr")
 script = SubResource("GDScript_mhnvy")

@@ -7,7 +7,7 @@ extends CharacterBody2D
 var left_limit := 256.0
 var right_limit := 704.0
 var direction := 1  # 1 = вправо, -1 = влево
-var target_y := 64.0
+var target_y := 80.0
 
 func _ready():
 	if autonomous_mode:
@@ -19,13 +19,15 @@ func _ready():
 
 func _physics_process(delta):
 	if autonomous_mode:
-		_autonomous_move(delta)
+		_autonomous_move()
 	else:
-		_player_controlled_move(delta)
+		_player_controlled_move()
 
-func _autonomous_move(delta):
-	position.x += direction * autonomous_speed * delta
-	position.y = target_y  # фиксируем по y
+func _autonomous_move():
+	# движение только по оси X
+	velocity.x = direction * autonomous_speed
+	velocity.y = 0
+	move_and_slide()
 
 	if position.x >= right_limit:
 		position.x = right_limit
@@ -38,7 +40,7 @@ func _autonomous_move(delta):
 
 	$AnimatedSprite2D.play("walk")
 
-func _player_controlled_move(delta):
+func _player_controlled_move():
 	var input_dir = Vector2.ZERO
 
 	if Input.is_action_pressed("ui_right") or Input.is_action_pressed("move_right"):
@@ -52,9 +54,12 @@ func _player_controlled_move(delta):
 
 	if input_dir != Vector2.ZERO:
 		input_dir = input_dir.normalized()
-		position += input_dir * player_speed * delta
+		velocity = input_dir * player_speed
+		move_and_slide()
 		$AnimatedSprite2D.play("walk")
 		if input_dir.x != 0:
 			$AnimatedSprite2D.flip_h = input_dir.x < 0
 	else:
+		velocity = Vector2.ZERO
+		move_and_slide()
 		$AnimatedSprite2D.play("idle")
