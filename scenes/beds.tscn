@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://bt6a5q1baq7c5"]
+
+[ext_resource type="Script" uid="uid://d3fhwrfb2ibj" path="res://scripts/beds.gd" id="1_1bx1o"]
+[ext_resource type="Texture2D" uid="uid://4vd57cc2mtkw" path="res://assets/Tilesets/Tilled_Dirt_v2.png" id="2_bh1s7"]
+[ext_resource type="PackedScene" uid="uid://56c3buopbmf5" path="res://scenes/plant.tscn" id="3_j2fqk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j2fqk"]
+size = Vector2(26, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yypm"]
+atlas = ExtResource("2_bh1s7")
+region = Rect2(8, 48, 32, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ts87b"]
+size = Vector2(44, 32)
+
+[node name="Bed" type="Node2D"]
+script = ExtResource("1_1bx1o")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+z_index = 1
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+process_priority = 1
+process_physics_priority = 1
+light_mask = 3
+visibility_layer = 3
+z_index = 1
+z_as_relative = false
+shape = SubResource("RectangleShape2D_j2fqk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 3
+visibility_layer = 3
+z_index = 2
+texture = SubResource("AtlasTexture_1yypm")
+
+[node name="InteractionZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+shape = SubResource("RectangleShape2D_ts87b")
+
+[node name="Plant" parent="." instance=ExtResource("3_j2fqk")]

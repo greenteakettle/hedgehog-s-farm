@@ -17,7 +17,7 @@ func _ready():
 	else:
 		$AnimatedSprite2D.play("idle")
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if autonomous_mode:
 		_autonomous_move()
 	else:

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnsp0isdo0q2c"]
+
+[ext_resource type="Script" uid="uid://c1fa2xmptjk1b" path="res://scripts/harvest_item.gd" id="1_fmyin"]
+[ext_resource type="Texture2D" uid="uid://hlwpx0roq8sw" path="res://assets/Objects/Basic_Plants.png" id="2_bunx2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w026e"]
+size = Vector2(13.667685, 14.020228)
+
+[node name="HarvestItem" type="Area2D"]
+z_index = 1
+script = ExtResource("1_fmyin")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_bunx2")
+region_enabled = true
+region_rect = Rect2(80.604126, -0.28756428, 15.255539, 15.713202)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5.9604645e-08, -5.9604645e-08)
+scale = Vector2(1.0974793, 1.1055455)
+shape = SubResource("RectangleShape2D_w026e")

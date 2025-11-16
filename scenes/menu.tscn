@@ -210,19 +210,19 @@ autonomous_mode = true
 [node name="MenuUI" type="TextureRect" parent="."]
 z_index = 2
 layout_mode = 0
-offset_left = 256.0
-offset_top = 143.002
-offset_right = 362.0
-offset_bottom = 265.002
+offset_left = 224.0
+offset_top = 112.00157
+offset_right = 343.74005
+offset_bottom = 238.94719
 scale = Vector2(4.81042, 2.33174)
 texture = SubResource("AtlasTexture_vjb58")
 
 [node name="Label" type="Label" parent="MenuUI"]
 layout_mode = 0
-offset_left = 6.6411
-offset_top = 15.4379
-offset_right = 129.641
-offset_bottom = 29.4379
+offset_left = 12.888689
+offset_top = 20.585775
+offset_right = 136.52513
+offset_bottom = 34.585777
 scale = Vector2(0.756629, 1.45)
 theme_override_colors/font_shadow_color = Color(0.713726, 0.537255, 0.384314, 1)
 theme_override_fonts/font = ExtResource("2_vjb58")
@@ -230,10 +230,10 @@ text = "hedgehog's farm"
 
 [node name="PlayButton" type="TextureButton" parent="MenuUI"]
 layout_mode = 0
-offset_left = 8.31528
-offset_top = 48.462208
-offset_right = 98.31528
-offset_bottom = 75.462204
+offset_left = 14.967505
+offset_top = 51.464443
+offset_right = 104.96751
+offset_bottom = 78.46445
 scale = Vector2(0.99695, 1.85338)
 texture_normal = SubResource("AtlasTexture_mhnvy")
 texture_pressed = SubResource("AtlasTexture_4ytvr")
