@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=4 format=3 uid="uid://dnbkpuh1v1gbk"]
+
+[ext_resource type="Texture2D" uid="uid://dhoevux3741uo" path="res://textures/wheat.tres" id="1_pk5ot"]
+[ext_resource type="Script" uid="uid://cmupnbl8tti1b" path="res://scripts/crop_data.gd" id="1_pwsrx"]
+[ext_resource type="Resource" uid="uid://doapxffnm02sc" path="res://res/wheat_produce.tres" id="2_3ffkp"]
+
+[resource]
+script = ExtResource("1_pwsrx")
+crop_name = "Wheat"
+inventory_icon = ExtResource("1_pk5ot")
+animation_name = "wheat_grow"
+produce_data = ExtResource("2_3ffkp")
+metadata/_custom_type_script = "uid://cmupnbl8tti1b"

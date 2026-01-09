@@ -1,27 +1,86 @@
-[gd_scene load_steps=17 format=4 uid="uid://6un8e28t3bop"]
+[gd_scene load_steps=21 format=4 uid="uid://6un8e28t3bop"]
 
 [ext_resource type="Texture2D" uid="uid://djkqre575jynb" path="res://assets/Sprite sheets/Setting menu.png" id="1_yqeox"]
 [ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="2_vjb58"]
-[ext_resource type="Texture2D" uid="uid://c2xdfriaoklv8" path="res://assets/Sprite sheets/UI Big Play Button.png" id="3_con2f"]
 [ext_resource type="Script" uid="uid://cl3tlrhlq1ija" path="res://scripts/menu.gd" id="4_mhnvy"]
 [ext_resource type="Texture2D" uid="uid://cs1i1jsd8eti0" path="res://assets/Tilesets/Fences.png" id="5_v86rl"]
 [ext_resource type="Texture2D" uid="uid://7kbarwoq42qj" path="res://assets/Tilesets/Grass.png" id="6_13sgg"]
+[ext_resource type="StyleBox" uid="uid://cls7nvvxqjd85" path="res://res/button_normal_style.tres" id="6_70i5f"]
+[ext_resource type="StyleBox" uid="uid://rm5m0jcm2og1" path="res://res/button_hover_style.tres" id="7_70i5f"]
 [ext_resource type="Texture2D" uid="uid://d2xti5v10n7xc" path="res://assets/Tilesets/Hills.png" id="7_i6lef"]
+[ext_resource type="StyleBox" uid="uid://b3yc22aco1kbc" path="res://res/button_pressed_style.tres" id="7_mj5lg"]
 [ext_resource type="PackedScene" uid="uid://bb4hbevunn53d" path="res://scenes/hedgehog.tscn" id="8_13sgg"]
+
+[sub_resource type="Animation" id="Animation_i6lef"]
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(248.00002, 104.00145)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_13sgg"]
+resource_name = "new_animation"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 2.22, 2.48, 4.5, 4.69708, 4.8070803, 4.81708, 7.4977946, 7.6530905, 7.866667, 9.54, 9.720678, 9.73, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(248.00002, 104.00145), Vector2(776, 104.00146), Vector2(816, 112.00157), Vector2(840.00006, 160.00224), Vector2(840, 408.0057), Vector2(823.9999, 456.00638), Vector2(776.00006, 464.00653), Vector2(776.00006, 464.00653), Vector2(248, 464.0065), Vector2(207.99998, 456.00638), Vector2(184, 400.0056), Vector2(184, 171.63396), Vector2(208.00002, 112.00156), Vector2(208, 112.001564), Vector2(248.00002, 104.00145)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 2.22, 2.48, 4.5, 4.69708, 4.8070803, 4.81708, 7.4977946, 7.6530905, 7.8630905, 9.5606785, 9.720678, 9.73, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.523598, 1.5707941, 1.5707941, 2.61799, 3.1415882, 3.1315873, 3.1415882, 3.6651862, 4.7123823, 4.71238898038469, 0.5235987755982988, -0.523598, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_70i5f"]
+_data = {
+&"RESET": SubResource("Animation_i6lef"),
+&"new_animation": SubResource("Animation_13sgg")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vjb58"]
 atlas = ExtResource("1_yqeox")
 region = Rect2(139, 12, 106, 122)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mhnvy"]
-atlas = ExtResource("3_con2f")
-region = Rect2(3, 34, 90, 27)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_70i5f"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ytvr"]
-atlas = ExtResource("3_con2f")
-region = Rect2(99, 36, 90, 25)
-
-[sub_resource type="GDScript" id="GDScript_mhnvy"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mj5lg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_70i5f"]
 texture = ExtResource("5_v86rl")
@@ -203,44 +262,99 @@ script = ExtResource("4_mhnvy")
 
 [node name="Hedgehog" parent="." instance=ExtResource("8_13sgg")]
 z_index = 3
-position = Vector2(254, 80.001114)
+position = Vector2(248.00002, 104.00145)
 scale = Vector2(3.95384, 3.95384)
 autonomous_mode = true
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hedgehog"]
+libraries = {
+&"": SubResource("AnimationLibrary_70i5f")
+}
+autoplay = "new_animation"
+speed_scale = 0.15
+
 [node name="MenuUI" type="TextureRect" parent="."]
 z_index = 2
-layout_mode = 0
-offset_left = 224.0
-offset_top = 112.00157
-offset_right = 343.74005
-offset_bottom = 238.94719
-scale = Vector2(4.81042, 2.33174)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -153.0
+offset_right = 300.0
+offset_bottom = 147.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("AtlasTexture_vjb58")
 
 [node name="Label" type="Label" parent="MenuUI"]
-layout_mode = 0
-offset_left = 12.888689
-offset_top = 20.585775
-offset_right = 136.52513
-offset_bottom = 34.585777
-scale = Vector2(0.756629, 1.45)
-theme_override_colors/font_shadow_color = Color(0.713726, 0.537255, 0.384314, 1)
+layout_mode = 1
+offset_left = 44.000008
+offset_top = 22.002243
+offset_right = 658.0
+offset_bottom = 90.00224
+scale = Vector2(0.84769046, 0.9268819)
+theme_override_colors/font_shadow_color = Color(0.7176471, 0.54509807, 0.39215687, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
 theme_override_fonts/font = ExtResource("2_vjb58")
+theme_override_font_sizes/font_size = 80
 text = "hedgehog's farm"
 
-[node name="PlayButton" type="TextureButton" parent="MenuUI"]
-layout_mode = 0
-offset_left = 14.967505
-offset_top = 51.464443
-offset_right = 104.96751
-offset_bottom = 78.46445
-scale = Vector2(0.99695, 1.85338)
-texture_normal = SubResource("AtlasTexture_mhnvy")
-texture_pressed = SubResource("AtlasTexture_4ytvr")
-script = SubResource("GDScript_mhnvy")
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -55.99675
+offset_right = 175.0
+offset_bottom = 106.003235
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="MenuUI/VBoxContainer"]
+custom_minimum_size = Vector2(90, 27)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 15
+theme_override_colors/font_color = Color(0.7137255, 0.5372549, 0.38431373, 1)
+theme_override_colors/font_pressed_color = Color(0.5986082, 0.4551242, 0.2955359, 1)
+theme_override_fonts/font = ExtResource("2_vjb58")
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = ExtResource("6_70i5f")
+theme_override_styles/pressed = ExtResource("7_mj5lg")
+theme_override_styles/hover = ExtResource("7_70i5f")
+theme_override_styles/hover_pressed = ExtResource("7_mj5lg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_70i5f")
+text = "play"
+
+[node name="LoadButton" type="Button" parent="MenuUI/VBoxContainer"]
+custom_minimum_size = Vector2(90, 27)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 15
+theme_override_colors/font_color = Color(0.7137255, 0.5372549, 0.38431373, 1)
+theme_override_colors/font_pressed_color = Color(0.5986082, 0.4551242, 0.2955359, 1)
+theme_override_fonts/font = ExtResource("2_vjb58")
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = ExtResource("6_70i5f")
+theme_override_styles/pressed = ExtResource("7_mj5lg")
+theme_override_styles/hover = ExtResource("7_70i5f")
+theme_override_styles/hover_pressed = ExtResource("7_mj5lg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mj5lg")
+text = "LOAD GAME"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
-scale = Vector2(3.1994, 2.99927)
+scale = Vector2(3.1994, 3.153172)
 tile_map_data = PackedByteArray("AAAEAAIAAgABAAEAAAAEAAMAAgABAAEAAAAEAAQAAQAEAAYAAAAEAAUAAgABAAEAAAAEAAYAAgABAAEAAAAEAAcAAgABAAEAAAAEAAgAAgABAAEAAAAFAAgAAgABAAEAAAAGAAgAAgABAAEAAAAHAAgAAgABAAEAAAAIAAgAAgABAAEAAAAJAAgAAgABAAEAAAAKAAgAAgABAAEAAAALAAgAAgABAAEAAAAMAAgAAgABAAEAAAANAAgAAgABAAEAAAAOAAgAAQAEAAYAAAARAAcAAgABAAEAAAAFAAIAAgABAAEAAAAGAAIAAgABAAEAAAAHAAIAAgABAAEAAAAIAAIAAgABAAEAAAAJAAIAAgABAAEAAAAKAAIAAgABAAEAAAALAAIAAgABAAEAAAAMAAIAAgABAAEAAAANAAIAAgABAAEAAAAOAAIAAgABAAEAAAAOAAMAAQABAAEAAAAOAAQAAQABAAEAAAAOAAUAAgABAAEAAAAOAAYAAgABAAEAAAAOAAcAAQABAAEAAAAFAAMAAgABAAEAAAAFAAQAAgABAAEAAAAFAAUAAgABAAEAAAAFAAYAAgABAAEAAAAFAAcAAgABAAEAAAAPAAgAAgABAAEAAAAPAAcAAgABAAEAAAAQAAcAAgABAAEAAAAQAAYAAgABAAEAAAAQAAUAAgABAAEAAAAQAAQAAQABAAEAAAAPAAMAAQABAAEAAAAPAAIAAgABAAEAAAAPAAQAAgABAAEAAAAPAAUAAgABAAEAAAAPAAYAAgABAAEAAAAPAAEAAgABAAEAAAAOAAEAAgABAAEAAAANAAEAAgABAAEAAAAMAAEAAgABAAEAAAALAAEAAgABAAEAAAAKAAEAAgABAAEAAAAJAAEAAgABAAEAAAAIAAEAAgABAAEAAAAHAAEAAgABAAEAAAAGAAEAAgABAAEAAAAFAAEAAgABAAEAAAAEAAEAAgABAAEAAAADAAEAAgABAAEAAAADAAAAAQABAAAAAAACAAAAAQABAAAAAAACAAEAAgABAAEAAAADAAIAAQAEAAYAAAADAAMAAQAEAAYAAAADAAQAAgABAAEAAAADAAUAAgABAAEAAAAFAAkAAgABAAEAAAAGAAkAAgABAAEAAAAHAAkAAgABAAEAAAAIAAkAAgABAAEAAAAKAAkAAgABAAEAAAALAAkAAgABAAEAAAAMAAoAAgABAAEAAAANAAoAAgABAAEAAAAOAAoAAgABAAEAAAANAAkAAgABAAEAAAAMAAkAAgABAAEAAAAPAAoAAgABAAEAAAAQAAoAAgABAAEAAAARAAsAAQABAAIAAAAQAAkAAQAEAAYAAAAPAAkAAQAEAAYAAAAOAAkAAgABAAEAAAATAAsAAQACAAIAAAASAAsAAQABAAIAAAABAAEAAQAEAAYAAAABAAAAAQABAAAAAAAAAAAAAQAAAAAAAAAGAAMAAgABAAEAAAAHAAMAAgABAAEAAAAAAAEAAQAAAAEAAAAAAAIAAQAAAAEAAAAAAAMAAQAAAAEAAAAAAAQAAQAAAAEAAAAAAAUAAQAAAAEAAAABAAYAAQABAAEAAAABAAcAAgABAAEAAAABAAgAAgABAAEAAAABAAkAAgABAAEAAAABAAoAAgABAAEAAAAAAAYAAQAAAAEAAAAAAAcAAQAAAAEAAAAAAAgAAQAAAAEAAAAAAAkAAQAAAAEAAAAAAAoAAQAAAAEAAAAAAAsAAQAAAAIAAAAEAAsAAQABAAIAAAAFAAsAAQABAAIAAAAHAAsAAQABAAIAAAAIAAsAAQABAAIAAAAJAAsAAQABAAIAAAAKAAsAAQABAAIAAAALAAsAAQABAAIAAAAMAAsAAQABAAIAAAANAAsAAQABAAIAAAAOAAsAAQABAAIAAAAPAAsAAQABAAIAAAAQAAsAAQABAAIAAAATAAoAAQACAAEAAAASAAoAAQAEAAYAAAARAAkAAgABAAEAAAARAAgAAgABAAEAAAAQAAgAAgABAAEAAAARAAoAAQAEAAYAAAASAAkAAgABAAEAAAASAAgAAgABAAEAAAATAAgAAQACAAEAAAATAAcAAQACAAEAAAATAAkAAQACAAEAAAATAAYAAQACAAEAAAATAAUAAQACAAEAAAATAAQAAQACAAEAAAATAAMAAQACAAEAAAATAAIAAQACAAEAAAATAAEAAQACAAEAAAATAAAAAQACAAAAAAASAAAAAQABAAAAAAARAAAAAQABAAAAAAAQAAAAAQABAAAAAAAPAAAAAQABAAAAAAAOAAAAAQABAAAAAAANAAAAAQABAAAAAAAMAAAAAQABAAAAAAALAAAAAQABAAAAAAAKAAAAAQABAAAAAAAJAAAAAQABAAAAAAAIAAAAAQABAAAAAAAHAAAAAQABAAAAAAAGAAAAAQABAAAAAAAFAAAAAQABAAAAAAAEAAAAAQABAAAAAAAQAAEAAgABAAEAAAARAAEAAgABAAEAAAASAAEAAgABAAEAAAASAAIAAgABAAEAAAARAAMAAQABAAEAAAARAAQAAQABAAEAAAARAAUAAgABAAEAAAARAAYAAgABAAEAAAASAAYAAgABAAEAAAASAAcAAgABAAEAAAASAAUAAgABAAEAAAASAAQAAgABAAEAAAAQAAIAAQABAAEAAAAQAAMAAQABAAEAAAARAAIAAQABAAEAAAASAAMAAgABAAEAAAABAAIAAgABAAEAAAACAAIAAQAEAAYAAAACAAMAAgABAAEAAAABAAMAAgABAAEAAAABAAQAAgABAAEAAAACAAQAAQABAAEAAAACAAUAAQABAAEAAAABAAUAAgABAAEAAAACAAYAAQABAAEAAAACAAcAAQABAAEAAAACAAgAAgABAAEAAAADAAkAAgABAAEAAAACAAkAAgABAAEAAAACAAoAAgABAAEAAAADAAoAAgABAAEAAAAEAAoAAgABAAEAAAAFAAoAAgABAAEAAAAGAAoAAgABAAEAAAAHAAoAAgABAAEAAAAIAAoAAgABAAEAAAAJAAoAAgABAAEAAAAKAAoAAgABAAEAAAALAAoAAgABAAEAAAAJAAkAAgABAAEAAAAEAAkAAgABAAEAAAADAAgAAQABAAEAAAADAAcAAQABAAEAAAADAAYAAQABAAEAAAAIAAMAAgABAAEAAAAJAAMAAgABAAEAAAAKAAMAAQABAAEAAAALAAQAAQABAAEAAAALAAUAAQABAAEAAAALAAYAAQABAAEAAAALAAcAAQABAAEAAAAGAAsAAQABAAIAAAADAAsAAQABAAIAAAACAAsAAQABAAIAAAABAAsAAQABAAIAAAAGAAQAAQABAAEAAAAGAAUAAQABAAEAAAAGAAYAAQABAAEAAAAGAAcAAQABAAEAAAAHAAUAAQABAAEAAAAHAAQAAQABAAEAAAAHAAYAAQABAAEAAAAHAAcAAQABAAEAAAAIAAcAAQABAAEAAAAJAAYAAQABAAEAAAAKAAYAAQABAAEAAAAMAAYAAQABAAEAAAAKAAcAAQABAAEAAAAJAAcAAQABAAEAAAAMAAcAAQABAAEAAAANAAcAAQABAAEAAAANAAYAAQABAAEAAAAIAAYAAQABAAEAAAAIAAUAAQABAAEAAAAJAAQAAQABAAEAAAAKAAQAAQABAAEAAAAIAAQAAQABAAEAAAAMAAQAAQABAAEAAAANAAQAAQABAAEAAAAMAAUAAQABAAEAAAAKAAUAAQABAAEAAAAJAAUAAQABAAEAAAANAAUAAQABAAEAAAALAAMAAQABAAEAAAAMAAMAAQABAAEAAAANAAMAAQABAAEAAAA=")
 tile_set = SubResource("TileSet_6cdou")
+
+[connection signal="pressed" from="MenuUI/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuUI/VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]

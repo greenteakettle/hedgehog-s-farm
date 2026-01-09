@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var plant_scene: PackedScene = preload("res://scenes/plant.tscn")
+@export var plant_scene = preload("res://scenes/plant.tscn")
 @export var plant_positions: Array[Vector2] = [
 	Vector2(100, 200),
 	Vector2(200, 200),

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=3 format=3 uid="uid://doapxffnm02sc"]
+
+[ext_resource type="Script" uid="uid://cmupnbl8tti1b" path="res://scripts/crop_data.gd" id="1_75f5j"]
+[ext_resource type="Texture2D" uid="uid://km3w2ahjt68c" path="res://textures/wheat_item.tres" id="1_to216"]
+
+[resource]
+script = ExtResource("1_75f5j")
+crop_name = "Wheat Item"
+inventory_icon = ExtResource("1_to216")
+metadata/_custom_type_script = "uid://cmupnbl8tti1b"

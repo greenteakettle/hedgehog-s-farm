@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=4 format=3 uid="uid://pb63b12r2ta1"]
+
+[ext_resource type="Script" uid="uid://cmupnbl8tti1b" path="res://scripts/crop_data.gd" id="1_eyigl"]
+[ext_resource type="Texture2D" uid="uid://c6adks7v4mgyy" path="res://textures/eggplant.tres" id="1_gfutc"]
+[ext_resource type="Resource" uid="uid://c511b2843eae4" path="res://res/eggplant_produce.tres" id="2_p7qep"]
+
+[resource]
+script = ExtResource("1_eyigl")
+crop_name = "Eggplant"
+inventory_icon = ExtResource("1_gfutc")
+animation_name = "eggplant_grow"
+produce_data = ExtResource("2_p7qep")
+metadata/_custom_type_script = "uid://cmupnbl8tti1b"

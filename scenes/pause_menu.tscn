@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://bci7a4gkimr61"]
+
+[ext_resource type="Script" uid="uid://c8i7oswtf348u" path="res://scripts/pause_menu.gd" id="1_v4r4p"]
+[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="2_1s2dm"]
+[ext_resource type="StyleBox" uid="uid://rm5m0jcm2og1" path="res://res/button_hover_style.tres" id="3_88e76"]
+[ext_resource type="StyleBox" uid="uid://b3yc22aco1kbc" path="res://res/button_pressed_style.tres" id="4_knqa7"]
+[ext_resource type="StyleBox" uid="uid://b828bttoyg1ir" path="res://res/button_hover_pressed_style.tres" id="5_71k7c"]
+[ext_resource type="StyleBox" uid="uid://cls7nvvxqjd85" path="res://res/button_normal_style.tres" id="6_cmnsq"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_v4r4p")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3137255)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ResumeButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7447532, 0.5841538, 0.40696013, 1)
+theme_override_colors/font_hover_color = Color(0.964099, 0.9175548, 0.8689098, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5986082, 0.4551242, 0.2955359, 1)
+theme_override_fonts/font = ExtResource("2_1s2dm")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("3_88e76")
+theme_override_styles/pressed = ExtResource("4_knqa7")
+theme_override_styles/hover = ExtResource("3_88e76")
+theme_override_styles/hover_pressed = ExtResource("5_71k7c")
+text = "RESUME"
+
+[node name="SaveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74509805, 0.58431375, 0.40784314, 1)
+theme_override_colors/font_hover_color = Color(0.9647059, 0.91764706, 0.87058824, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.6, 0.45490196, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("2_1s2dm")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("6_cmnsq")
+theme_override_styles/pressed = ExtResource("4_knqa7")
+theme_override_styles/hover = ExtResource("3_88e76")
+theme_override_styles/hover_pressed = ExtResource("5_71k7c")
+text = "SAVE"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74509805, 0.58431375, 0.40784314, 1)
+theme_override_colors/font_hover_color = Color(0.9647059, 0.91764706, 0.87058824, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.6, 0.45490196, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("2_1s2dm")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("6_cmnsq")
+theme_override_styles/pressed = ExtResource("4_knqa7")
+theme_override_styles/hover = ExtResource("3_88e76")
+theme_override_styles/hover_pressed = ExtResource("5_71k7c")
+text = "QUIT"
+
+[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_pressed"]

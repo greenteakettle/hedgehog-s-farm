@@ -2,27 +2,46 @@ extends Node2D
 
 @export var harvest_scene: PackedScene
 @export var growth_time: float = 3.0
-@export var growth_frames: int = 4
+@export var growth_frames: int = 3 
+
+var current_crop_data: CropData = null 
 
 var stage: int = 0
 var player_in_area: bool = false
-var is_ready_for_plant: bool = true
 var timer: Timer
 
-# Узлы сцены
 @onready var crop_sprite = $CropSprite
 @onready var e_label = $E_Indicator
-@onready var seed_indicator = $SeedIndicator
 @onready var interaction_zone = $InteractionZone
 @onready var harvest_spawn_point = $HarvestSpawnPoint
 
+# Функция для восстановления состояния при загрузке
+func restore_state(data):
+	# 1. Восстанавливаем стадию
+	stage = data["stage"]
+	
+	# 2. Восстанавливаем растение
+	if data["crop_path"] != "":
+		current_crop_data = load(data["crop_path"])
+		crop_sprite.visible = true
+		crop_sprite.play(current_crop_data.animation_name)
+		crop_sprite.frame = stage
+	else:
+		current_crop_data = null
+		crop_sprite.visible = false
+		_show_indicators() # Показать "PRESS E TO PLANT"
+
+	# 3. Восстанавливаем таймер
+	if data["time_left"] > 0 and stage < growth_frames:
+		timer.start(data["time_left"])
+		print("Таймер грядки перезапущен: ", data["time_left"])
+	else:
+		timer.stop()
+
 func _ready():
-	if not crop_sprite or not e_label or not seed_indicator or not interaction_zone or not harvest_spawn_point:
-		push_error("Plant nodes are missing!")
-		return
 
 	_hide_all()
-
+	crop_sprite.visible = false 
 	timer = Timer.new()
 	timer.wait_time = growth_time
 	timer.one_shot = false
@@ -36,63 +55,128 @@ func _process(_delta):
 	if Input.is_action_just_pressed("interact"):
 		_on_interact()
 
-# --- Зона посадки ---
 func _on_body_entered(body):
+	print("Кто-то зашел в зону: ", body.name) # 1. Проверяем, видит ли зона кого-то
+	
 	if body.name == "Hedgehog":
 		player_in_area = true
-		if stage == 0 and is_ready_for_plant:
-			_show_indicators(true)
+		print("Это ежик! Текущая стадия (stage): ", stage) # 2. Проверяем стадию
+		
+		# Если вы используете переменную is_ready_for_plant из старого кода:
+		# print("Готовность к посадке: ", is_ready_for_plant) 
+		
+		if stage == 0:
+			print("Пытаюсь показать E_Indicator") # 3. Дошли ли мы до команды
+			_show_indicators()
 
 func _on_body_exited(body):
 	if body.name == "Hedgehog":
 		player_in_area = false
-		if stage == 0:
-			_hide_all()
+		_hide_all()
 
-# --- Посадка и сбор ---
 func _on_interact():
-	if stage == 0 and player_in_area and is_ready_for_plant:
-		stage = 1
-		is_ready_for_plant = false
-		_hide_all()
-		crop_sprite.visible = true
-		crop_sprite.frame = stage
-		timer.start()
-	elif stage == growth_frames:
-		_spawn_harvest()
-		stage = 0
-		is_ready_for_plant = true
-		crop_sprite.visible = false
-		crop_sprite.frame = 0
-		timer.stop()
-		_hide_all()
+	if stage == 0 and player_in_area:
+		var inventory = get_tree().get_first_node_in_group("inventory")
+		
+		if inventory:
+			var item_data = inventory.get_selected_crop_data_and_decrease()
+			if item_data != null:
+				if item_data.animation_name != "":
+					current_crop_data = item_data
+					stage = 0
+					
+					_hide_all()
+					crop_sprite.visible = true
+					
+					crop_sprite.play(current_crop_data.animation_name)
+					growth_frames = crop_sprite.sprite_frames.get_frame_count(current_crop_data.animation_name) - 1
+					crop_sprite.frame = 0 
+					crop_sprite.pause()   
+					
+					timer.start()
+					print("Посажено: ", item_data.crop_name)
+					
+				else:
 
-# --- Рост растения ---
+					inventory.add_item(item_data)
+			else:
+				print("В руках пусто!")
+
+	elif stage >= growth_frames and player_in_area:
+		_spawn_harvest()
+		
+		stage = 0
+		current_crop_data = null
+		crop_sprite.visible = false
+		timer.stop()
+		
+		_show_indicators() 
+
 func _on_grow():
-	if stage > 0 and stage < growth_frames:
+	if stage < growth_frames:
 		stage += 1
 		crop_sprite.frame = stage
+		
+		if stage == growth_frames:
+			timer.stop()
+		
+		if player_in_area:
+				_show_indicators()
 
-	if stage == growth_frames:
-		timer.stop()
-		_show_indicators(false) # E для сбора урожая
-
-# --- Спавн урожая ---
 func _spawn_harvest():
 	if not harvest_scene:
 		return
+	
+	# 1. Спавним ВОЗВРАТ СЕМЯН (то, что мы сажали)
+	spawn_item(current_crop_data, Vector2(-10, -10)) 
+	
+	# 2. Спавним УРОЖАЙ (если он указан в паспорте)
+	if current_crop_data.produce_data != null:
+		spawn_item(current_crop_data.produce_data, Vector2(10, -10))
 
+# Вспомогательная функция, чтобы не дублировать код спавна
+func spawn_item(data: CropData, offset: Vector2):
 	var drop = harvest_scene.instantiate()
-	# позиционируем относительно глобальной позиции Marker2D
-	drop.global_position = harvest_spawn_point.global_position + Vector2(randf()*30 -15, -15)
-	# добавляем в родителя сцены, чтобы объект был на том же уровне, что и игрок
+	
+	drop.global_position = harvest_spawn_point.global_position + offset
+	drop.crop_data = data
+	
 	get_tree().current_scene.add_child(drop)
 
-# --- Вспомогательные функции ---
 func _hide_all():
-	e_label.visible = false
-	seed_indicator.visible = false
+	if e_label:
+		e_label.visible = false
 
-func _show_indicators(show_seed: bool):
-	e_label.visible = true
-	seed_indicator.visible = show_seed
+func _show_indicators():
+	
+	if not player_in_area:
+		if e_label: e_label.visible = false
+		return
+
+	if not e_label: return
+	
+	# 1. Если грядка пустая - зовем сажать
+	if stage == 0:
+		e_label.text = "PRESS E TO PLANT"
+		e_label.visible = true
+		
+	# 2. Если урожай созрел - зовем собирать
+	elif stage >= growth_frames:
+		e_label.text = "PRESS E TO COLLECT"
+		e_label.visible = true
+		
+	# 3. Если еще растет - прячем надпись 
+	else:
+		e_label.visible = false
+# Функция для получения словаря с данными для сохранения
+func get_save_data():
+	var save_dict = {
+		"stage": stage,
+		"time_left": timer.time_left, # Сколько секунд осталось расти
+		"crop_path": "" # Путь к файлу ресурса растения
+	}
+	# Если что-то растет, сохраняем путь к ресурсу
+	if current_crop_data != null:
+		save_dict["crop_path"] = current_crop_data.resource_path
+		
+	return save_dict

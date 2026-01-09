@@ -78,7 +78,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a88lo"]
 size = Vector2(61, 47)
 
-[node name="Plant" type="Node2D" groups=["persisted_beds"]]
+[node name="Plant" type="Node2D"]
 z_index = 1
 script = ExtResource("1_a88lo")
 harvest_scene = ExtResource("2_toh6u")
@@ -104,6 +104,7 @@ text = "press e to plant"
 metadata/_edit_use_anchors_ = true
 
 [node name="HarvestSpawnPoint" type="Marker2D" parent="."]
+script = ExtResource("1_a88lo")
 
 [node name="InteractionZone" type="Area2D" parent="."]
 

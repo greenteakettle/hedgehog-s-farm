@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=3 format=3 uid="uid://c511b2843eae4"]
+
+[ext_resource type="Texture2D" uid="uid://dfw7opae5ff3q" path="res://textures/eggplant_item.tres" id="1_5875i"]
+[ext_resource type="Script" uid="uid://cmupnbl8tti1b" path="res://scripts/crop_data.gd" id="1_eldq8"]
+
+[resource]
+script = ExtResource("1_eldq8")
+crop_name = "Eggplant Item"
+inventory_icon = ExtResource("1_5875i")
+metadata/_custom_type_script = "uid://cmupnbl8tti1b"

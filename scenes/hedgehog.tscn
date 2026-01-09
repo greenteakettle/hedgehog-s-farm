@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bb4hbevunn53d"]
+[gd_scene load_steps=15 format=3 uid="uid://bb4hbevunn53d"]
 
 [ext_resource type="Script" uid="uid://cd70v3e3w1bdp" path="res://scripts/hedgehog.gd" id="1_smy4v"]
 [ext_resource type="Texture2D" uid="uid://h1nhaedb30oq" path="res://assets/pixel_art_hedgehog/idle/idle.png" id="2_d8tr7"]
 [ext_resource type="Texture2D" uid="uid://86ktv0d7xwde" path="res://assets/pixel_art_hedgehog/move/move.png" id="2_uksvm"]
+[ext_resource type="Texture2D" uid="uid://km3w2ahjt68c" path="res://textures/wheat_item.tres" id="4_d8tr7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ti5rv"]
 atlas = ExtResource("2_d8tr7")
@@ -76,14 +77,22 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uksvm"]
 size = Vector2(16, 8)
 
-[node name="Hedgehog" type="CharacterBody2D"]
+[node name="Hedgehog" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_smy4v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.6694813, 0.6694813)
 sprite_frames = SubResource("SpriteFrames_ti5rv")
-animation = &"idle"
+animation = &"walk"
+speed_scale = 0.9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_uksvm")
+
+[node name="HeldItemSprite" type="Sprite2D" parent="." groups=["player"]]
+z_index = 5
+position = Vector2(-4, 1)
+rotation = 0.27071282
+scale = Vector2(0.4236026, 0.4236026)
+texture = ExtResource("4_d8tr7")

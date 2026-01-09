@@ -1,27 +1,61 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2saobq0d6fdj"]
+[gd_scene load_steps=5 format=3 uid="uid://d2saobq0d6fdj"]
 
 [ext_resource type="Texture2D" uid="uid://cryndmm3uq6h3" path="res://textures/slot.tres" id="1_eqbkm"]
-[ext_resource type="Texture2D" uid="uid://dhoevux3741uo" path="res://textures/corn.tres" id="2_l0xgl"]
+[ext_resource type="Script" uid="uid://dey2mmj14cqyk" path="res://scripts/item_slot.gd" id="1_l0xgl"]
+[ext_resource type="Texture2D" uid="uid://dhoevux3741uo" path="res://textures/wheat.tres" id="2_l0xgl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l0xgl"]
+bg_color = Color(0.4745098, 0.33333334, 0.3529412, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="ItemSlot" type="Control"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(25, 25)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 32.0
-offset_bottom = 32.0
+offset_right = 20.0
+offset_bottom = 21.0
+script = ExtResource("1_l0xgl")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="SelectionBorder" type="Panel" parent="."]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l0xgl")
+
+[node name="Slot" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0020772, 0.99623585)
 texture = ExtResource("1_eqbkm")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="TextureRect"]
-visible = false
+[node name="ItemTexture" type="TextureRect" parent="Slot"]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 7.0
-offset_right = 50.0
-offset_bottom = 47.0
-scale = Vector2(0.5007106, 0.5007106)
+offset_left = 4.9896355
+offset_top = 3.0113351
+offset_right = 19.958542
+offset_bottom = 19.07179
 texture = ExtResource("2_l0xgl")
+
+[node name="CountLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 11.0
+offset_right = 28.0
+offset_bottom = 34.0
+scale = Vector2(0.42711982, 0.34898067)
+text = "\"\""
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,11 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://gpxw3gqi07rt"]
+[gd_scene load_steps=4 format=3 uid="uid://gpxw3gqi07rt"]
 
+[ext_resource type="Script" uid="uid://bioa0bq88q0t8" path="res://scripts/inventory_ui.gd" id="1_sn0gn"]
 [ext_resource type="Texture2D" uid="uid://bu8k2kfp84d2c" path="res://textures/interface.tres" id="1_yw7or"]
 [ext_resource type="PackedScene" uid="uid://d2saobq0d6fdj" path="res://scenes/item_slot.tscn" id="2_sn0gn"]
 
-[node name="InventoryUI" type="Control"]
+[node name="InventoryUI" type="Control" groups=["inventory"]]
+clip_contents = true
 layout_mode = 3
-anchors_preset = 0
+anchor_right = 0.15400001
+anchor_bottom = 0.069000006
+offset_right = 2.3039856
+offset_bottom = 0.2559967
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+script = ExtResource("1_sn0gn")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -18,7 +28,21 @@ custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_left = 10.0
 offset_top = 6.0
-offset_right = 150.0
-offset_bottom = 30.0
+offset_right = 151.0
+offset_bottom = 31.0
+alignment = 1
 
 [node name="ItemSlot" parent="Slots" instance=ExtResource("2_sn0gn")]
+layout_mode = 2
+
+[node name="ItemSlot2" parent="Slots" instance=ExtResource("2_sn0gn")]
+layout_mode = 2
+
+[node name="ItemSlot3" parent="Slots" instance=ExtResource("2_sn0gn")]
+layout_mode = 2
+
+[node name="ItemSlot4" parent="Slots" instance=ExtResource("2_sn0gn")]
+layout_mode = 2
+
+[node name="ItemSlot5" parent="Slots" instance=ExtResource("2_sn0gn")]
+layout_mode = 2
