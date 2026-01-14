@@ -5,6 +5,10 @@ extends CharacterBody2D
 @export var player_speed := 10       
 @onready var held_item_sprite = $HeldItemSprite
 @onready var main_sprite = $AnimatedSprite2D
+@export var tile_map: TileMap
+@export var object_scene: PackedScene
+
+var occupied_cells = {}
 
 var left_limit := 232.0
 var right_limit := 792
@@ -18,11 +22,19 @@ func _ready():
 	if autonomous_mode:
 		position = Vector2(left_limit, target_y)
 		direction = 1
-		main_sprite.play("walk") # Используем переменную main_sprite
+		main_sprite.play("walk") 
 	else:
 		main_sprite.play("idle")
 
 func _physics_process(_delta):
+	if Input.is_action_just_pressed("draw"):
+		#_place_object_scene()
+		var new_bed = preload("res://scenes/beds.tscn").instantiate()
+		
+		new_bed.global_position = get_global_mouse_position()
+		get_parent().add_child(new_bed)
+		
+		
 	if autonomous_mode:
 		_autonomous_move()
 	else:
@@ -96,3 +108,28 @@ func update_held_item(item_texture: Texture2D):
 		held_item_sprite.visible = true
 	else:
 		held_item_sprite.visible = false
+
+func _place_object_scene():
+	if not tile_map:
+		print("Ошибка: Не привязан TileMap")
+		return
+	if not object_scene:
+		print("Ошибка: Не выбрана сцена (Object Scene) в инспекторе")
+		return
+
+	var mouse_pos = get_global_mouse_position()
+	var local_pos = tile_map.to_local(mouse_pos)
+	var map_coords = tile_map.local_to_map(local_pos) 
+	
+	if map_coords in occupied_cells:
+		print("Здесь уже что-то стоит!")
+		return
+
+	var world_pos_centered = tile_map.map_to_local(map_coords)
+	
+	var new_object = object_scene.instantiate()
+	new_object.position = world_pos_centered
+	
+	tile_map.add_child(new_object)
+	
+	occupied_cells[map_coords] = true
