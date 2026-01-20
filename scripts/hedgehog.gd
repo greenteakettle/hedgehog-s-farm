@@ -2,47 +2,125 @@ extends CharacterBody2D
 
 @export var autonomous_mode := false
 @export var autonomous_speed := 40  
-@export var player_speed := 10       
+@export var player_speed := 10        
 @onready var held_item_sprite = $HeldItemSprite
 @onready var main_sprite = $AnimatedSprite2D
-@export var tile_map: TileMap
-@export var object_scene: PackedScene
+
+# Убедись, что тут выбран слой с землей!
+@export var tile_map: TileMapLayer 
+@export var object_scene: PackedScene = preload("res://scenes/beds.tscn")
+@export var bed_width_in_cells: int = 2 # Ширина грядки
 
 var occupied_cells = {}
-
 var left_limit := 232.0
 var right_limit := 792
 var direction := 1  
 var target_y := 80.0 
 
 func _ready():
-	if held_item_sprite:
-		held_item_sprite.visible = false
-		
+	if held_item_sprite: held_item_sprite.visible = false
 	if autonomous_mode:
 		position = Vector2(left_limit, target_y)
 		direction = 1
 		main_sprite.play("walk") 
 	else:
 		main_sprite.play("idle")
+		
+	# ПРОВЕРКА 1: Привязан ли TileMap?
+	if tile_map == null:
+		print("!!! ОШИБКА: TileMap не привязан в Инспекторе Ежа! Скрипт не будет работать.")
+	else:
+		print(">>> TileMap успешно подключен.")
 
 func _physics_process(_delta):
-	if Input.is_action_just_pressed("draw"):
-		#_place_object_scene()
-		var new_bed = preload("res://scenes/beds.tscn").instantiate()
-		
-		new_bed.global_position = get_global_mouse_position()
-		get_parent().add_child(new_bed)
-		
-		
-	if autonomous_mode:
-		_autonomous_move()
+	# ЛКМ - Ставить
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		if Input.is_action_just_pressed("draw") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			place_bed_on_grid()
+
+	# ПКМ - Удалять (Проверяем только момент нажатия, чтобы не спамить)
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		if not was_rmb_pressed:
+			remove_bed_from_grid()
+			was_rmb_pressed = true
 	else:
-		_player_controlled_move()
+		was_rmb_pressed = false
+		
+	if autonomous_mode: _autonomous_move()
+	else: _player_controlled_move()
+
+# Переменная, чтобы лог не бежал слишком быстро
+var was_rmb_pressed = false 
+
+func place_bed_on_grid():
+	if not tile_map: return
+
+	var mouse_pos = get_global_mouse_position()
+	var local_pos = tile_map.to_local(mouse_pos)
+	var map_coords = tile_map.local_to_map(local_pos)
 	
+	# Проверка места
+	for i in range(bed_width_in_cells):
+		if (map_coords + Vector2i(i, 0)) in occupied_cells:
+			return 
+
+	# Установка
+	var new_bed = object_scene.instantiate()
+	tile_map.add_child(new_bed)
+	new_bed.position = tile_map.map_to_local(map_coords)
+	
+	for i in range(bed_width_in_cells):
+		occupied_cells[map_coords + Vector2i(i, 0)] = new_bed
+		
+	print("Поставил грядку в: ", map_coords)
+
+
+func remove_bed_from_grid():
+	if not tile_map:
+		print("!!! TileMap отвалился!")
+		return
+	
+	var mouse_pos = get_global_mouse_position()
+	var local_pos = tile_map.to_local(mouse_pos)
+	var map_coords = tile_map.local_to_map(local_pos)
+	
+	print("Клик по клетке: ", map_coords)
+	
+	# ПРОВЕРКА 3: Есть ли эта клетка в списке?
+	if map_coords in occupied_cells:
+		print("Клетка найдена в списке занятых!")
+		var bed_to_remove = occupied_cells[map_coords]
+		
+		if is_instance_valid(bed_to_remove):
+			# ПРОВЕРКА 4: Отвечает ли грядка?
+			if bed_to_remove.has_method("has_plant"):
+				var busy = bed_to_remove.has_plant()
+				print("Грядка говорит, занята ли она: ", busy)
+				if busy:
+					print("ОТМЕНА: Там растет растение.")
+					return
+			else:
+				print("ВНИМАНИЕ: У грядки нет функции has_plant")
+
+			bed_to_remove.queue_free()
+			
+			# Чистка словаря
+			var keys_to_erase = []
+			for key in occupied_cells.keys():
+				if occupied_cells[key] == bed_to_remove:
+					keys_to_erase.append(key)
+			for key in keys_to_erase:
+				occupied_cells.erase(key)
+			print("Грядка удалена.")
+		else:
+			print("Ошибка: Объект грядки уже удален, но остался в памяти.")
+			occupied_cells.erase(map_coords)
+	else:
+		print("В этой клетке ПУСТО согласно списку occupied_cells.")
+		print("Список занятых клеток сейчас: ", occupied_cells.keys())
+
 
 func _autonomous_move():
-	# движение только по оси X
 	velocity.x = direction * autonomous_speed
 	velocity.y = 0
 	move_and_slide()
@@ -76,26 +154,16 @@ func _player_controlled_move():
 		move_and_slide()
 		main_sprite.play("walk")
 		
-		# --- ЛОГИКА ПОВОРОТА И СДВИГА ПРЕДМЕТА ---
 		if input_dir.x != 0:
 			var is_flipped = input_dir.x < 0
-			
-			# 1. Поворачиваем самого ежа
 			main_sprite.flip_h = is_flipped
 			
-			# 2. Если есть предмет - поворачиваем и двигаем его
 			if held_item_sprite:
 				held_item_sprite.flip_h = is_flipped
-				
-				# Магия с позицией:
-				# Берем текущее смещение по модулю (всегда положительное число)
 				var offset = abs(held_item_sprite.position.x)
-				
 				if is_flipped:
-					# Если смотрим ВЛЕВО -> предмет должен быть правее центра (плюс)
 					held_item_sprite.position.x = offset 
 				else:
-					# Если смотрим ВПРАВО -> предмет должен быть левее центра (минус)
 					held_item_sprite.position.x = -offset
 	else:
 		velocity = Vector2.ZERO
@@ -108,28 +176,3 @@ func update_held_item(item_texture: Texture2D):
 		held_item_sprite.visible = true
 	else:
 		held_item_sprite.visible = false
-
-func _place_object_scene():
-	if not tile_map:
-		print("Ошибка: Не привязан TileMap")
-		return
-	if not object_scene:
-		print("Ошибка: Не выбрана сцена (Object Scene) в инспекторе")
-		return
-
-	var mouse_pos = get_global_mouse_position()
-	var local_pos = tile_map.to_local(mouse_pos)
-	var map_coords = tile_map.local_to_map(local_pos) 
-	
-	if map_coords in occupied_cells:
-		print("Здесь уже что-то стоит!")
-		return
-
-	var world_pos_centered = tile_map.map_to_local(map_coords)
-	
-	var new_object = object_scene.instantiate()
-	new_object.position = world_pos_centered
-	
-	tile_map.add_child(new_object)
-	
-	occupied_cells[map_coords] = true

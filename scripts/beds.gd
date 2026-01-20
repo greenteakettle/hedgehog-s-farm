@@ -13,3 +13,22 @@ func _ready():
 		var plant = plant_scene.instantiate()
 		plant.position = pos
 		add_child(plant)
+
+
+func has_plant() -> bool:
+	print("[BEDS] Проверка: можно ли удалить грядку?")
+	
+	# Пробегаемся по всем детям грядки (там должны быть растения)
+	for child in get_children():
+		
+		# Если у ребенка есть нужная функция (значит это растение)
+		if child.has_method("is_growing"):
+			var is_busy = child.is_growing()
+			print(" -> Растение найдено. Растет что-то? ", is_busy)
+			
+			# Если растение говорит "да" (true), значит удалять нельзя
+			if is_busy:
+				return true
+				
+	print(" -> Все чисто, можно удалять.")
+	return false

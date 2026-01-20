@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_eyigl")
-crop_name = "Eggplant"
+crop_name = "Eggplant Seeds"
 inventory_icon = ExtResource("1_gfutc")
 animation_name = "eggplant_grow"
 produce_data = ExtResource("2_p7qep")

@@ -56,21 +56,12 @@ func _process(_delta):
 		_on_interact()
 
 func _on_body_entered(body):
-	print("Кто-то зашел в зону: ", body.name) # 1. Проверяем, видит ли зона кого-то
-	
-	if body.name == "Hedgehog":
+	if body.name == "Hedgehog" or body.is_in_group("player"):
 		player_in_area = true
-		print("Это ежик! Текущая стадия (stage): ", stage) # 2. Проверяем стадию
-		
-		# Если вы используете переменную is_ready_for_plant из старого кода:
-		# print("Готовность к посадке: ", is_ready_for_plant) 
-		
-		if stage == 0:
-			print("Пытаюсь показать E_Indicator") # 3. Дошли ли мы до команды
-			_show_indicators()
+		_show_indicators()
 
 func _on_body_exited(body):
-	if body.name == "Hedgehog":
+	if body.is_in_group("player"):
 		player_in_area = false
 		_hide_all()
 
@@ -169,6 +160,7 @@ func _show_indicators():
 	else:
 		e_label.visible = false
 # Функция для получения словаря с данными для сохранения
+
 func get_save_data():
 	var save_dict = {
 		"stage": stage,
@@ -180,3 +172,9 @@ func get_save_data():
 		save_dict["crop_path"] = current_crop_data.resource_path
 		
 	return save_dict
+
+func is_growing() -> bool:
+	# Если current_crop_data не равно null, значит что-то посажено
+	if current_crop_data != null:
+		return true
+	return false

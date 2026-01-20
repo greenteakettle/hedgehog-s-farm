@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcnxaan4nj7q6"]
+
+[ext_resource type="Script" uid="uid://bce44k2pwch4n" path="res://scripts/fog_gate.gd" id="1_7xtqo"]
+[ext_resource type="Texture2D" uid="uid://bw57np55xx11j" path="res://textures/fog_texture.tres" id="2_n377e"]
+[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="3_jiatv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1d2g"]
+size = Vector2(117.5, 61)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aixac"]
+size = Vector2(20.942825, 21.23755)
+
+[node name="FogGate" type="Node2D"]
+z_index = 5
+script = ExtResource("1_7xtqo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 3
+visibility_layer = 3
+z_index = 15
+scale = Vector2(0.045946024, 0.04896001)
+texture = ExtResource("2_n377e")
+region_enabled = true
+region_rect = Rect2(226.6737, 353.638, 2597.4893, 1250.6433)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-59, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(59, 30)
+shape = SubResource("RectangleShape2D_h1d2g")
+
+[node name="BuyingZone" type="Area2D" parent="."]
+position = Vector2(0, 46)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuyingZone"]
+scale = Vector2(1.7189658, 1.4596785)
+shape = SubResource("RectangleShape2D_aixac")
+
+[node name="Label" type="Label" parent="BuyingZone"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -3.0
+offset_right = 14.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.245, 0.245)
+theme_override_fonts/font = ExtResource("3_jiatv")
+theme_override_font_sizes/font_size = 20
+text = "\"\""
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

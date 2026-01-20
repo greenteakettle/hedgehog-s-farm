@@ -107,3 +107,42 @@ func add_item_force(data: CropData, amount: int):
 		if slot.my_crop_data == null:
 			slot.update_slot_with_data(data, amount)
 			return
+# --- НОВЫЕ ФУНКЦИИ ДЛЯ ТУМАНА (Вставить в конец inventory_ui.gd) ---
+
+# 1. Считаем общее количество конкретного предмета во всех слотах
+func get_item_count(target_name: String) -> int:
+	var total = 0
+	for slot in slots:
+		# Проверяем, есть ли предмет в слоте
+		if slot.my_crop_data != null:
+			# ВАЖНО: Убедись, что в ресурсе CropData есть поле crop_name (или name)
+			# Если у тебя переменная называется name, замени crop_name на name
+			if slot.my_crop_data.crop_name == target_name:
+				total += slot.count
+	return total
+
+# 2. Забираем предметы из слотов (для оплаты)
+func remove_item_by_name(target_name: String, amount_needed: int):
+	var left_to_remove = amount_needed
+	
+	for slot in slots:
+		# Если нашли нужный предмет
+		if slot.my_crop_data != null and slot.my_crop_data.crop_name == target_name:
+			
+			if slot.count > left_to_remove:
+				# В слоте больше, чем нужно. Отнимаем часть.
+				var new_count = slot.count - left_to_remove
+				slot.update_slot_with_data(slot.my_crop_data, new_count)
+				left_to_remove = 0
+				break # Всё оплатили, выходим
+				
+			else:
+				# В слоте меньше или ровно. Забираем всё и ищем дальше.
+				left_to_remove -= slot.count
+				slot.update_slot_with_data(null, 0) # Очищаем слот повністю
+				
+			if left_to_remove <= 0:
+				break
+
+	# Обновляем внешний вид ежа (вдруг мы забрали то, что он держал в руках)
+	update_player_visuals()
