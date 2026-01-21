@@ -1,49 +1,59 @@
-[gd_scene load_steps=16 format=3 uid="uid://56c3buopbmf5"]
+[gd_scene load_steps=21 format=3 uid="uid://56c3buopbmf5"]
 
 [ext_resource type="Script" uid="uid://0i2mstb1x56u" path="res://scripts/plant.gd" id="1_a88lo"]
-[ext_resource type="Texture2D" uid="uid://hlwpx0roq8sw" path="res://assets/Objects/Basic_Plants.png" id="2_m5w0e"]
 [ext_resource type="PackedScene" uid="uid://cnsp0isdo0q2c" path="res://scenes/harvest_item.tscn" id="2_toh6u"]
-[ext_resource type="Texture2D" uid="uid://bbh31cswjbk23" path="res://textures/Basic_Plants.png" id="3_ptog4"]
+[ext_resource type="Texture2D" uid="uid://bbh31cswjbk23" path="res://textures/Basic_Plants.png" id="3_m5w0e"]
+[ext_resource type="Texture2D" uid="uid://dbj2jcadahqg1" path="res://textures/Basic_Grass_Biom_things.png" id="3_ptog4"]
 [ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="3_toh6u"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ljraq"]
-atlas = ExtResource("3_ptog4")
-region = Rect2(16, 16, 16, 16)
+[ext_resource type="AudioStream" uid="uid://boj4p0l1015pa" path="res://assets/sounds/pop_out.wav" id="6_ptog4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2riao"]
 atlas = ExtResource("3_ptog4")
-region = Rect2(32, 16, 16, 16)
+region = Rect2(0, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_68tkh"]
 atlas = ExtResource("3_ptog4")
-region = Rect2(48, 16, 16, 16)
+region = Rect2(16, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cqtiq"]
 atlas = ExtResource("3_ptog4")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kp45f"]
+atlas = ExtResource("3_m5w0e")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ls7ot"]
+atlas = ExtResource("3_m5w0e")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7smmp"]
+atlas = ExtResource("3_m5w0e")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h1wh"]
+atlas = ExtResource("3_m5w0e")
 region = Rect2(64, 16, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j2fqk"]
-atlas = ExtResource("2_m5w0e")
+[sub_resource type="AtlasTexture" id="AtlasTexture_toh6u"]
+atlas = ExtResource("3_m5w0e")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ts87b"]
-atlas = ExtResource("2_m5w0e")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptog4"]
+atlas = ExtResource("3_m5w0e")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p232i"]
-atlas = ExtResource("2_m5w0e")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qc6y"]
+atlas = ExtResource("3_m5w0e")
 region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ill3f"]
-atlas = ExtResource("2_m5w0e")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljraq"]
+atlas = ExtResource("3_m5w0e")
 region = Rect2(64, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ptog4"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_2riao"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ljraq")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2riao")
 }, {
@@ -54,21 +64,38 @@ animations = [{
 "texture": SubResource("AtlasTexture_cqtiq")
 }],
 "loop": true,
+"name": &"apple_grow",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kp45f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ls7ot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7smmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h1wh")
+}],
+"loop": true,
 "name": &"eggplant_grow",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j2fqk")
+"texture": SubResource("AtlasTexture_toh6u")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ts87b")
+"texture": SubResource("AtlasTexture_ptog4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_p232i")
+"texture": SubResource("AtlasTexture_8qc6y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ill3f")
+"texture": SubResource("AtlasTexture_ljraq")
 }],
 "loop": true,
 "name": &"wheat_grow",
@@ -78,6 +105,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a88lo"]
 size = Vector2(61, 47)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ptog4"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("6_ptog4")
+
 [node name="Plant" type="Node2D" groups=["persisted_beds"]]
 z_index = 1
 script = ExtResource("1_a88lo")
@@ -86,8 +118,8 @@ harvest_scene = ExtResource("2_toh6u")
 [node name="CropSprite" type="AnimatedSprite2D" parent="."]
 z_index = 3
 position = Vector2(0, -4)
-sprite_frames = SubResource("SpriteFrames_ptog4")
-animation = &"eggplant_grow"
+sprite_frames = SubResource("SpriteFrames_2riao")
+animation = &"wheat_grow"
 speed_scale = 0.2
 
 [node name="E_Indicator" type="Label" parent="."]
@@ -109,3 +141,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
 shape = SubResource("RectangleShape2D_a88lo")
+
+[node name="AppearSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_ptog4")

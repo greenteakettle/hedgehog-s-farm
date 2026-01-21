@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://rmmhm616g0kw"]
+
+[ext_resource type="Script" uid="uid://qlg534snpchu" path="res://scripts/apple.gd" id="1_3dmh2"]
+[ext_resource type="Texture2D" uid="uid://dbj2jcadahqg1" path="res://textures/Basic_Grass_Biom_things.png" id="1_h071m"]
+[ext_resource type="Resource" uid="uid://70g4767jp3h3" path="res://res/apple_data.tres" id="2_pg1xk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vr8k"]
+atlas = ExtResource("1_h071m")
+region = Rect2(0, 32, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dmh2"]
+atlas = ExtResource("1_h071m")
+region = Rect2(16, 32, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg1xk"]
+atlas = ExtResource("1_h071m")
+region = Rect2(32, 32, 16, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a7wfc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vr8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dmh2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pg1xk")
+}],
+"loop": false,
+"name": &"apple_grow",
+"speed": 0.5
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a7wfc"]
+radius = 7.0
+
+[node name="Apple" type="Area2D"]
+z_index = 20
+script = ExtResource("1_3dmh2")
+crop_data = ExtResource("2_pg1xk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a7wfc")
+animation = &"apple_grow"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_a7wfc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

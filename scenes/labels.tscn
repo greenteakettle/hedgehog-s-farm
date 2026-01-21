@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dd4nmbqwrcvgu"]
+
+[ext_resource type="Texture2D" uid="uid://bu8k2kfp84d2c" path="res://textures/interface.tres" id="1_sb3gc"]
+[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="2_67m8c"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(48, 16)
+texture = ExtResource("1_sb3gc")
+
+[node name="Label" type="Label" parent="Sprite2D"]
+offset_left = -48.0
+offset_top = -8.0
+offset_right = 152.0
+offset_bottom = 15.0
+theme_override_fonts/font = ExtResource("2_67m8c")
+text = "Hello my name is hedgehog"

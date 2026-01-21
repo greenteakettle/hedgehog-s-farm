@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=3 format=3 uid="uid://70g4767jp3h3"]
+
+[ext_resource type="Texture2D" uid="uid://vy0sdqxo8bak" path="res://textures/apple.tres" id="1_25vx0"]
+[ext_resource type="Script" uid="uid://cmupnbl8tti1b" path="res://scripts/crop_data.gd" id="2_thfp1"]
+
+[resource]
+script = ExtResource("2_thfp1")
+crop_name = "Apple"
+inventory_icon = ExtResource("1_25vx0")

@@ -4,6 +4,7 @@ extends Area2D
 
 @onready var sprite = $Sprite2D
 
+
 var can_be_picked_up: bool = false
 
 func _ready():
@@ -22,12 +23,14 @@ func _ready():
 
 	await get_tree().create_timer(0.5).timeout
 	
+	
+	
 	can_be_picked_up = true
 
 
 func _on_body_entered(body):
 	if body.name == "Hedgehog" and can_be_picked_up:
 		if crop_data != null:
-			# AudioPlayer.play_pickup() 
 			get_tree().call_group("inventory", "add_item", crop_data)
+			Global.hedgehog.pick_up_sound()
 			queue_free()

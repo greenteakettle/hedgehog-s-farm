@@ -1,11 +1,157 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcnxaan4nj7q6"]
+[gd_scene load_steps=8 format=3 uid="uid://bcnxaan4nj7q6"]
 
 [ext_resource type="Script" uid="uid://bce44k2pwch4n" path="res://scripts/fog_gate.gd" id="1_7xtqo"]
 [ext_resource type="Texture2D" uid="uid://bw57np55xx11j" path="res://textures/fog_texture.tres" id="2_n377e"]
 [ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="3_jiatv"]
 
+[sub_resource type="Shader" id="Shader_7xtqo"]
+code = "shader_type canvas_item;
+
+// Odpowiednik iChannel0.
+// Używamy hint_screen_texture, aby odczytać to, co znajduje się pod tym shaderem (tło).
+uniform sampler2D screen_content : hint_screen_texture, filter_linear_mipmap;
+
+// Ustawienia umożliwiające dostosowanie shadera w inspektorze
+uniform float time_speed : hint_range(0.0, 5.0) = 1.0;
+uniform float scale : hint_range(1.0, 20.0) = 10.0;
+// Nowy parametr: odległość zanikania od krawędzi (domyślnie 0.1)
+uniform float fade_distance : hint_range(0.0, 0.5) = 0.1;
+
+float random(vec2 _st) {
+	return fract(sin(dot(_st.xy, vec2(0.630, 0.710))) * 43759.329);
+}
+
+// Szum Berlina/Value Noise
+float noise(vec2 _st) {
+	vec2 i = floor(_st);
+	vec2 f = fract(_st);
+
+	float a = random(i);
+	float b = random(i + vec2(1.0, 0.0));
+	float c = random(i + vec2(0.0, 1.0));
+	float d = random(i + vec2(1.0, 1.0));
+
+	vec2 u = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, u.x) +
+			(c - a) * u.y * (1.0 - u.x) +
+			(d - b) * u.x * u.y;
+}
+
+const int NUM_OCTAVES = 6;
+
+// Brownian Fractal Motion (FBM)
+float fbm(vec2 _st) {
+	float v = 0.0;
+	float a = 0.5;
+	vec2 shift = vec2(100.0, 100.0);
+	
+	float c = cos(0.5);
+	float s = sin(0.5);
+	// Godot mat2 jest konstruowany kolumnami: mat2(col1, col2)
+	mat2 rot = mat2(vec2(c, s), vec2(-s, c));
+
+	for (int i = 0; i < NUM_OCTAVES; ++i) {
+		v += a * noise(_st);
+		// Godot obsługuje mnożenie wektor * macierz
+		_st = _st * rot * 2.0 + shift;
+		a *= 0.5;
+	}
+	return v;
+}
+
+// Funkcja mieszania kolorów (tryb \"Lighter\" / \"Screen\")
+vec3 filter_color(vec3 color1, vec3 color2) {
+	return 1.0 - (1.0 - color1) * (1.0 - color2);
+}
+
+void fragment() {
+	// Godot UV jest od 0.0 do 1.0. 
+	// Używamy SCREEN_UV do poprawnego próbkowania tekstury tła.
+	vec3 backcolor = texture(screen_content, SCREEN_UV).rgb;
+	
+	// Lokalne UV do generowania chmur
+	vec2 uv = UV;
+	
+	// Oryginalny kod odwracał Y. Utrzymujemy to dla zachowania oryginalnego wyglądu ruchu.
+	// Po tej operacji uv.y = 0 to wizualnie góra, a uv.y = 1 to dół.
+	uv.y = 1.0 - uv.y; 
+
+	vec2 st = uv * scale;
+	
+	// Użycie czasu
+	float t = TIME * time_speed;
+	
+	st.x += t * 0.1;
+	st.y -= t * 0.2;
+
+	vec3 color;
+
+	// Domain warping (zniekształcanie domeny)
+	vec2 q;
+	q.x = fbm(st + 0.00 * t * 5.0);
+	q.y = fbm(st + vec2(1.0, 1.0));
+
+	vec2 r;
+	r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.15 * t * 5.0);
+	r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.126 * t * 5.0);
+
+	float f = fbm(st + r);
+
+	color = mix(vec3(1.0, 1.0, 1.0),
+				vec3(1.0, 1.0, 1.0),
+				clamp((f * f) * 4.0, 0.0, 1.0));
+
+	color = mix(color,
+				vec3(1.0, 1.0, 1.0),
+				clamp(length(q), 0.0, 1.0));
+
+	color = mix(color,
+				vec3(1.0, 1.0, 1.0),
+				clamp(length(r.x), 0.0, 1.0));
+
+	// Podstawowy kolor chmury
+	vec3 cloud = vec3((f * f * f + 0.3 * f * f + 0.5 * f) * color);
+
+	// --- NOWA LOGIKA ZANIKANIA KRAWĘDZI ---
+	
+	// Używamy funkcji smoothstep, aby stworzyć miękkie przejście od 0.0 (krawędź) do 1.0 (środek).
+	// fade_distance to 0.1 (ustawione w uniform na górze).
+	
+	// Zanikanie na osi X (lewa i prawa krawędź)
+	// smoothstep(0.0, 0.1, uv.x) -> zanika lewą stronę
+	// smoothstep(1.0, 0.9, uv.x) -> zanika prawą stronę
+	float fade_x = smoothstep(0.0, fade_distance, uv.x) * smoothstep(1.0, 1.0 - fade_distance, uv.x);
+	
+	// Zanikanie na osi Y (górna i dolna krawędź)
+	float fade_y = smoothstep(0.0, fade_distance, uv.y) * smoothstep(1.0, 1.0 - fade_distance, uv.y);
+	
+	// Łączymy zanikanie X i Y
+	float edge_fade = fade_x * fade_y;
+	
+	// Mnożymy kolor chmury przez współczynnik zanikania.
+	// Tam gdzie edge_fade jest 0, chmura będzie czarna (niewidoczna po dodaniu w trybie screen).
+	cloud *= edge_fade;
+	
+	// --- KONIEC NOWEJ LOGIKI ZANIKANIA ---
+	
+	// Połącz chmury z tłem, używając funkcji mieszania Screen (Lighter)
+	vec3 final_color = filter_color(cloud, backcolor);
+	
+	COLOR = vec4(final_color, 1.0);
+	
+	//COLOR*=clamp(UV.x*6.0,0.0,1.0);
+	//COLOR*=clamp(UV.y*10.0,0.0,1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n377e"]
+shader = SubResource("Shader_7xtqo")
+shader_parameter/time_speed = 1.0
+shader_parameter/scale = 10.0
+shader_parameter/fade_distance = 0.1
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1d2g"]
-size = Vector2(117.5, 61)
+size = Vector2(128, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aixac"]
 size = Vector2(20.942825, 21.23755)
@@ -18,9 +164,9 @@ script = ExtResource("1_7xtqo")
 light_mask = 3
 visibility_layer = 3
 z_index = 15
+material = SubResource("ShaderMaterial_n377e")
 scale = Vector2(0.045946024, 0.04896001)
 texture = ExtResource("2_n377e")
-region_enabled = true
 region_rect = Rect2(226.6737, 353.638, 2597.4893, 1250.6433)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -31,26 +177,20 @@ position = Vector2(59, 30)
 shape = SubResource("RectangleShape2D_h1d2g")
 
 [node name="BuyingZone" type="Area2D" parent="."]
-position = Vector2(0, 46)
+position = Vector2(0, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BuyingZone"]
 scale = Vector2(1.7189658, 1.4596785)
 shape = SubResource("RectangleShape2D_aixac")
 
 [node name="Label" type="Label" parent="BuyingZone"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -2.0
-offset_top = -3.0
-offset_right = 14.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.245, 0.245)
+offset_left = -16.0
+offset_top = -8.0
+offset_right = 94.0
+offset_bottom = 42.0
+scale = Vector2(0.3, 0.3)
 theme_override_fonts/font = ExtResource("3_jiatv")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 10
 text = "\"\""
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true

@@ -3,6 +3,7 @@ extends Node
 
 const SAVE_PATH = "user://savegame.save"
 const ITEM_SCENE_PATH = "res://scenes/harvest_item.tscn" # <--- ПРОВЕРЬТЕ ЭТОТ ПУТЬ!
+var hedgehog = 0
 
 var game_data = {
 	"player_pos_x": 0,

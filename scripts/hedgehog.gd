@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var player_speed := 10        
 @onready var held_item_sprite = $HeldItemSprite
 @onready var main_sprite = $AnimatedSprite2D
+@onready var collect_sound: AudioStreamPlayer2D = $CollectSound
 
 # Убедись, что тут выбран слой с землей!
 @export var tile_map: TileMapLayer 
@@ -18,6 +19,8 @@ var direction := 1
 var target_y := 80.0 
 
 func _ready():
+	Global.hedgehog = self 
+	
 	if held_item_sprite: held_item_sprite.visible = false
 	if autonomous_mode:
 		position = Vector2(left_limit, target_y)
@@ -176,3 +179,6 @@ func update_held_item(item_texture: Texture2D):
 		held_item_sprite.visible = true
 	else:
 		held_item_sprite.visible = false
+
+func pick_up_sound():
+	collect_sound.play()

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwl2mp7pf13k6"]
+
+[ext_resource type="Script" uid="uid://bcyeclkspwnpl" path="res://scripts/apple_tree.gd" id="1_66v30"]
+[ext_resource type="Texture2D" uid="uid://8oo12nfh248k" path="res://assets/Objects/Basic_Grass_Biom_things.png" id="1_rf3rb"]
+[ext_resource type="PackedScene" uid="uid://rmmhm616g0kw" path="res://scenes/apple.tscn" id="2_66v30"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66v30"]
+size = Vector2(26, 24)
+
+[node name="AppleTree" type="StaticBody2D"]
+z_index = 20
+script = ExtResource("1_66v30")
+apple_scene = ExtResource("2_66v30")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rf3rb")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_66v30")
+
+[node name="GrowthTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Point1" type="Marker2D" parent="."]
+position = Vector2(-7, -8)
+
+[node name="Point2" type="Marker2D" parent="."]
+position = Vector2(8, -4)
+
+[node name="Point3" type="Marker2D" parent="."]
+position = Vector2(-2, 2)
+
+[connection signal="timeout" from="GrowthTimer" to="." method="_on_growth_timer_timeout"]

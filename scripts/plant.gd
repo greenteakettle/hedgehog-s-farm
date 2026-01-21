@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var harvest_scene: PackedScene
-@export var growth_time: float = 3.0
-@export var growth_frames: int = 3 
+@export var growth_time: float = 3
+@export var growth_frames: int = 3
 
 var current_crop_data: CropData = null 
 
@@ -14,6 +14,7 @@ var timer: Timer
 @onready var e_label = $E_Indicator
 @onready var interaction_zone = $InteractionZone
 @onready var harvest_spawn_point = $HarvestSpawnPoint
+@onready var appear_sound = $AppearSound
 
 # Функция для восстановления состояния при загрузке
 func restore_state(data):
@@ -124,6 +125,7 @@ func _spawn_harvest():
 	# 2. Спавним УРОЖАЙ (если он указан в паспорте)
 	if current_crop_data.produce_data != null:
 		spawn_item(current_crop_data.produce_data, Vector2(10, -10))
+		appear_sound.play() 
 
 # Вспомогательная функция, чтобы не дублировать код спавна
 func spawn_item(data: CropData, offset: Vector2):

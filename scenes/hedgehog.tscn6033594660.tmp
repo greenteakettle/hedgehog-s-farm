@@ -1,10 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://bb4hbevunn53d"]
+[gd_scene load_steps=15 format=3 uid="uid://bb4hbevunn53d"]
 
 [ext_resource type="Script" uid="uid://cd70v3e3w1bdp" path="res://scripts/hedgehog.gd" id="1_smy4v"]
 [ext_resource type="Texture2D" uid="uid://h1nhaedb30oq" path="res://assets/pixel_art_hedgehog/idle/idle.png" id="2_d8tr7"]
 [ext_resource type="Texture2D" uid="uid://86ktv0d7xwde" path="res://assets/pixel_art_hedgehog/move/move.png" id="2_uksvm"]
 [ext_resource type="Texture2D" uid="uid://km3w2ahjt68c" path="res://textures/wheat_item.tres" id="4_d8tr7"]
-[ext_resource type="AudioStream" uid="uid://c3yq5mah34ppe" path="res://assets/sounds/collect.wav" id="5_3ri3m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ti5rv"]
 atlas = ExtResource("2_d8tr7")
@@ -99,6 +98,3 @@ position = Vector2(-4, 1)
 rotation = 0.27071282
 scale = Vector2(0.4236026, 0.4236026)
 texture = ExtResource("4_d8tr7")
-
-[node name="CollectSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_3ri3m")
