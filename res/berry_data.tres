@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CropData" load_steps=3 format=3 uid="uid://bgeodwmej8sur"]
+
+[ext_resource type="Script" uid="uid://cmupnbl8tti1b" path="res://scripts/crop_data.gd" id="1_5p1xh"]
+[ext_resource type="Texture2D" uid="uid://d0iwyrylnj3iq" path="res://textures/berry.tres" id="1_dmaxb"]
+
+[resource]
+script = ExtResource("1_5p1xh")
+crop_name = "Berry"
+inventory_icon = ExtResource("1_dmaxb")

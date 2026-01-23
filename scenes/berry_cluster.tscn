@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvn15gbuewx00"]
+
+[ext_resource type="Script" uid="uid://7ri23ksiuxha" path="res://scripts/berry_cluster.gd" id="1_q4dtq"]
+[ext_resource type="Resource" uid="uid://bgeodwmej8sur" path="res://res/berry_data.tres" id="2_w0vha"]
+[ext_resource type="Texture2D" uid="uid://8oo12nfh248k" path="res://assets/Objects/Basic_Grass_Biom_things.png" id="3_qosdr"]
+[ext_resource type="AudioStream" uid="uid://boj4p0l1015pa" path="res://assets/sounds/pop_out.wav" id="4_q4dtq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rygpx"]
+size = Vector2(61, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebj82"]
+atlas = ExtResource("3_qosdr")
+region = Rect2(33, 48, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldcvu"]
+atlas = ExtResource("3_qosdr")
+region = Rect2(49, 48, 14, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dawu3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebj82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ldcvu")
+}],
+"loop": true,
+"name": &"berry_grow",
+"speed": 5.0
+}]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w0vha"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("4_q4dtq")
+
+[node name="BerryCluster" type="Area2D"]
+z_index = 20
+script = ExtResource("1_q4dtq")
+item_data = ExtResource("2_w0vha")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rygpx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dawu3")
+animation = &"berry_grow"
+
+[node name="GrowthTimer" type="Timer" parent="."]
+
+[node name="AppearSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_w0vha")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="GrowthTimer" to="." method="_on_growth_timer_timeout"]

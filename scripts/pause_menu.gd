@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var resume_btn = $VBoxContainer/ResumeButton
 @onready var save_btn = $VBoxContainer/SaveButton
 @onready var quit_btn = $VBoxContainer/QuitButton
+@onready var click_sound = $ClickSound
 
 func _ready():
 	visible = false # Спрятать меню при старте
@@ -19,13 +20,16 @@ func toggle_pause():
 	get_tree().paused = visible # Ставим игру на ПАУЗУ (физика и таймеры остановятся)
 
 func _on_resume_pressed():
+	click_sound.play()
 	toggle_pause() # Просто снимаем паузу
 
 func _on_save_pressed():
+	click_sound.play()
 	Global.save_game() # Зовем наш глобальный скрипт!
 	# Можно добавить надпись "Saved!"
 
 func _on_quit_pressed():
+	click_sound.play()
 	toggle_pause() # Снимаем паузу перед выходом
 	get_tree().change_scene_to_file("res://scenes/menu.tscn") # Возврат в главное меню
 

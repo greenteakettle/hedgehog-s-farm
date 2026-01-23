@@ -2,7 +2,7 @@ extends StaticBody2D
 
 @export var apple_scene: PackedScene
 @export var max_apples: int = 2      # СТРОГИЙ ЛИМИТ: Максимум 2 яблока
-@export var growth_time: float = 5.0 # Как часто дерево пытается родить яблоко
+@export var growth_time: float = 10 # Как часто дерево пытается родить яблоко
 
 var spawned_apples = [] 
 @onready var spawn_points = [$Point1, $Point2, $Point3]

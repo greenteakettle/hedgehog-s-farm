@@ -35,20 +35,26 @@ func _ready():
 	else:
 		print(">>> TileMap успешно подключен.")
 
-func _physics_process(_delta):
-	# ЛКМ - Ставить
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		if Input.is_action_just_pressed("draw") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			place_bed_on_grid()
+var can_build_beds: bool = false 
 
-	# ПКМ - Удалять (Проверяем только момент нажатия, чтобы не спамить)
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		if not was_rmb_pressed:
-			remove_bed_from_grid()
-			was_rmb_pressed = true
-	else:
-		was_rmb_pressed = false
+func _physics_process(_delta):
+	# 2. ОБОРАЧИВАЕМ ЛОГИКУ СТРОИТЕЛЬСТВА В ПРОВЕРКУ
+	# Если can_build_beds == true, то разрешаем кликать
+	if can_build_beds:
+		# ЛКМ - Ставить
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			if Input.is_action_just_pressed("draw") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+				place_bed_on_grid()
+
+		# ПКМ - Удалять
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+			if not was_rmb_pressed:
+				remove_bed_from_grid()
+				was_rmb_pressed = true
+		else:
+			was_rmb_pressed = false
 		
+	# Логика движения остается без изменений (снаружи if can_build_beds)
 	if autonomous_mode: _autonomous_move()
 	else: _player_controlled_move()
 

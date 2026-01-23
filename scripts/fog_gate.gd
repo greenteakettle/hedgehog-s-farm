@@ -2,11 +2,14 @@ extends Node2D
 
 # Настройка цены в Инспекторе
 @export var requirements = {
-	"Wheat Item": 1,
-	"Eggplant Item": 1
+	"Wheat Item": 3,
+	"Eggplant Item": 3,
+	"Apple": 3,
+	"Berry": 3,
 }
 
 var paid_items = {} # Счетчик оплаты
+@onready var open_sound = $OpenSound
 
 # Ссылки на детей (Убедись, что имена в дереве совпадают!)
 @onready var label = $BuyingZone/Label
@@ -14,6 +17,7 @@ var paid_items = {} # Счетчик оплаты
 # ВАЖНО: Нам нужна именно CollisionShape2D внутри StaticBody2D
 @onready var wall_collision = $StaticBody2D/CollisionShape2D 
 @onready var sprite = $Sprite2D
+
 
 func _ready():
 	# Инициализация
@@ -91,6 +95,8 @@ func open_gate():
 	
 	# 2. Отключаем физическую стену (обязательно через set_deferred!)
 	wall_collision.set_deferred("disabled", true)
+	
+	open_sound.play()
 	
 	# 3. Анимация исчезновения тумана
 	var tween = create_tween()

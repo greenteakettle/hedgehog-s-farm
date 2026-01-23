@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bt6a5q1baq7c5"]
+[gd_scene load_steps=8 format=3 uid="uid://bt6a5q1baq7c5"]
 
 [ext_resource type="Script" uid="uid://d3fhwrfb2ibj" path="res://scripts/beds.gd" id="1_1bx1o"]
 [ext_resource type="Texture2D" uid="uid://4vd57cc2mtkw" path="res://assets/Tilesets/Tilled_Dirt_v2.png" id="2_bh1s7"]
 [ext_resource type="PackedScene" uid="uid://56c3buopbmf5" path="res://scenes/plant.tscn" id="3_j2fqk"]
+[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="4_j2fqk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j2fqk"]
 size = Vector2(26, 10)
@@ -14,10 +15,11 @@ region = Rect2(8, 48, 32, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ts87b"]
 size = Vector2(44, 32)
 
-[node name="Bed" type="Node2D"]
+[node name="Bed" type="Node2D" groups=["persisted_beds"]]
 z_index = 5
 y_sort_enabled = true
 script = ExtResource("1_1bx1o")
+plant_scene = ExtResource("3_j2fqk")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 z_index = 1
@@ -43,4 +45,17 @@ texture = SubResource("AtlasTexture_1yypm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
 shape = SubResource("RectangleShape2D_ts87b")
 
-[node name="Plant" parent="." instance=ExtResource("3_j2fqk")]
+[node name="StatusLabel" type="Label" parent="."]
+visible = false
+z_index = 15
+offset_left = -27.0
+offset_top = -21.000002
+offset_right = 98.0
+offset_bottom = -7.000002
+scale = Vector2(0.4343988, 0.42392692)
+theme_override_colors/font_shadow_color = Color(0.5411765, 0.3764706, 0.35686275, 1)
+theme_override_fonts/font = ExtResource("4_j2fqk")
+theme_override_font_sizes/font_size = 16
+text = "press e to plant"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcnxaan4nj7q6"]
+[gd_scene load_steps=10 format=3 uid="uid://bcnxaan4nj7q6"]
 
 [ext_resource type="Script" uid="uid://bce44k2pwch4n" path="res://scripts/fog_gate.gd" id="1_7xtqo"]
-[ext_resource type="Texture2D" uid="uid://bw57np55xx11j" path="res://textures/fog_texture.tres" id="2_n377e"]
-[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="3_jiatv"]
+[ext_resource type="FontFile" uid="uid://d3vj3b8k1uvqm" path="res://assets/fonts/ByteBounce.ttf" id="2_7xtqo"]
+[ext_resource type="AudioStream" uid="uid://b0dlpu5udwnvq" path="res://assets/sounds/unlock.ogg" id="3_7xtqo"]
 
 [sub_resource type="Shader" id="Shader_7xtqo"]
 code = "shader_type canvas_item;
@@ -146,9 +146,14 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n377e"]
 shader = SubResource("Shader_7xtqo")
-shader_parameter/time_speed = 1.0
-shader_parameter/scale = 10.0
-shader_parameter/fade_distance = 0.1
+shader_parameter/time_speed = 1.2270000582825
+shader_parameter/scale = 20.0
+shader_parameter/fade_distance = 0.1750000083125
+
+[sub_resource type="Gradient" id="Gradient_5osqh"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7xtqo"]
+gradient = SubResource("Gradient_5osqh")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1d2g"]
 size = Vector2(128, 96)
@@ -165,15 +170,15 @@ light_mask = 3
 visibility_layer = 3
 z_index = 15
 material = SubResource("ShaderMaterial_n377e")
-scale = Vector2(0.045946024, 0.04896001)
-texture = ExtResource("2_n377e")
+scale = Vector2(0.515625, 98.5)
+texture = SubResource("GradientTexture1D_7xtqo")
 region_rect = Rect2(226.6737, 353.638, 2597.4893, 1250.6433)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-59, -30)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(59, 30)
+position = Vector2(59, 31)
 shape = SubResource("RectangleShape2D_h1d2g")
 
 [node name="BuyingZone" type="Area2D" parent="."]
@@ -184,13 +189,25 @@ scale = Vector2(1.7189658, 1.4596785)
 shape = SubResource("RectangleShape2D_aixac")
 
 [node name="Label" type="Label" parent="BuyingZone"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -16.0
-offset_top = -8.0
-offset_right = 94.0
-offset_bottom = 42.0
-scale = Vector2(0.3, 0.3)
-theme_override_fonts/font = ExtResource("3_jiatv")
-theme_override_font_sizes/font_size = 10
+offset_top = -19.0
+offset_right = 34.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6512814, 0.42647013)
+theme_override_colors/font_shadow_color = Color(0.3019608, 0.3019608, 0.3019608, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_7xtqo")
 text = "\"\""
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="OpenSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7xtqo")

@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2p4i80mebmgd"]
+
+[ext_resource type="Script" uid="uid://cf4mkeetmaetv" path="res://scripts/berry_bush.gd" id="1_12eow"]
+[ext_resource type="PackedScene" uid="uid://dvn15gbuewx00" path="res://scenes/berry_cluster.tscn" id="2_johh4"]
+[ext_resource type="Texture2D" uid="uid://dbj2jcadahqg1" path="res://textures/Basic_Grass_Biom_things.png" id="4_12eow"]
+[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="4_dy85o"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xykto"]
+radius = 8.0
+height = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4udp"]
+size = Vector2(36, 23)
+
+[node name="BerryBush" type="Node2D"]
+script = ExtResource("1_12eow")
+cluster_scene = ExtResource("2_johh4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_12eow")
+region_enabled = true
+region_rect = Rect2(16.42739, 47.04315, 15.759844, 16.894554)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CapsuleShape2D_xykto")
+
+[node name="Point1" type="Marker2D" parent="."]
+position = Vector2(-5, -4)
+
+[node name="Point2" type="Marker2D" parent="."]
+position = Vector2(5, -1)
+
+[node name="Point3" type="Marker2D" parent="."]
+position = Vector2(-1, 2)
+
+[node name="RespawnTimer" type="Timer" parent="."]
+
+[node name="DetectionZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("RectangleShape2D_c4udp")
+
+[node name="E_Indicator" type="Label" parent="."]
+z_index = 15
+offset_left = -31.0
+offset_top = -21.000002
+offset_right = 112.0
+offset_bottom = -7.000002
+scale = Vector2(0.4343988, 0.42392692)
+theme_override_colors/font_shadow_color = Color(0.5411765, 0.3764706, 0.35686275, 1)
+theme_override_fonts/font = ExtResource("4_dy85o")
+theme_override_font_sizes/font_size = 16
+text = "press e to collect"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://doqporqpwr4jx"]
+
+[ext_resource type="Script" uid="uid://mvksf4ejx1oe" path="res://scripts/story_notification.gd" id="1_7uff1"]
+[ext_resource type="Texture2D" uid="uid://dojihx4nu5rth" path="res://assets/Sprite sheets/Dialouge UI/Premade dialog box small.png" id="2_7bq6i"]
+[ext_resource type="FontFile" uid="uid://d3vj3b8k1uvqm" path="res://assets/fonts/ByteBounce.ttf" id="3_7uff1"]
+[ext_resource type="Texture2D" uid="uid://q0ykw1u47ni6" path="res://textures/hedgehog.tres" id="4_cfvfy"]
+[ext_resource type="AudioStream" uid="uid://dikf6e1ptjy8r" path="res://assets/sounds/notification.wav" id="5_cfvfy"]
+
+[node name="StoryNotification" type="Control"]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 95.0
+scale = Vector2(5, 5.221)
+script = ExtResource("1_7uff1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 95.0
+texture = ExtResource("2_7bq6i")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect"]
+layout_mode = 0
+offset_left = 112.54095
+offset_top = 33.44471
+offset_right = 274.54095
+offset_bottom = 71.44471
+theme_override_colors/font_outline_color = Color(0.76862746, 0.6039216, 0.42352942, 1)
+theme_override_colors/font_shadow_color = Color(0.54901963, 0.38039216, 0.36078432, 0.15686275)
+theme_override_fonts/normal_font = ExtResource("3_7uff1")
+theme_override_font_sizes/normal_font_size = 17
+text = "\"\""
+tab_size = 1
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 26.776981
+offset_top = 34.187927
+offset_right = 170.77698
+offset_bottom = 130.18793
+scale = Vector2(0.37990856, 0.37990856)
+texture = ExtResource("4_cfvfy")
+
+[node name="LifeTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="NotificationSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_cfvfy")
+
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://q0ykw1u47ni6"]
+
+[ext_resource type="Texture2D" uid="uid://c5bd8f4vo3pbd" path="res://assets/pixel_art_hedgehog/hedgehog.png" id="1_wp2si"]
+
+[resource]
+atlas = ExtResource("1_wp2si")
+region = Rect2(0, 8, 24, 16)

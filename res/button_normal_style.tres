@@ -1,6 +1,6 @@
 [gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://cls7nvvxqjd85"]
 
-[ext_resource type="Texture2D" uid="uid://cb3t3rfcw2k2b" path="res://scenes/UI Big Play Button.png" id="1_3xdjf"]
+[ext_resource type="Texture2D" uid="uid://cb3t3rfcw2k2b" path="res://textures/UI Big Play Button.png" id="1_3xdjf"]
 
 [resource]
 content_margin_left = 10.0
