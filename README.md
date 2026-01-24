@@ -17,7 +17,7 @@ I developed all the game logic, UI systems, and level design personally.
 ## ✨ Key Features & Technical Implementation
 
 * **Farming System:**
-    * TileMap interaction for tilling soil and watering.
+    * TileMap interaction.
     * Crop growth cycle logic (Seed -> Growing -> Harvest).
 * **Inventory System:**
     * Custom resource-based inventory.
