@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://rmmhm616g0kw"]
 
 [ext_resource type="Script" uid="uid://qlg534snpchu" path="res://scripts/apple.gd" id="1_3dmh2"]
-[ext_resource type="Texture2D" uid="uid://dbj2jcadahqg1" path="res://textures/Basic_Grass_Biom_things.png" id="1_h071m"]
+[ext_resource type="Texture2D" uid="uid://dmken1peihex5" path="res://textures/Basic_Grass_Biom_things.png" id="1_h071m"]
 [ext_resource type="Resource" uid="uid://70g4767jp3h3" path="res://res/apple_data.tres" id="2_pg1xk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7vr8k"]
@@ -37,7 +37,7 @@ animations = [{
 radius = 7.0
 
 [node name="Apple" type="Area2D"]
-z_index = 20
+z_index = 30
 script = ExtResource("1_3dmh2")
 crop_data = ExtResource("2_pg1xk")
 

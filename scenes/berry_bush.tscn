@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cf4mkeetmaetv" path="res://scripts/berry_bush.gd" id="1_12eow"]
 [ext_resource type="PackedScene" uid="uid://dvn15gbuewx00" path="res://scenes/berry_cluster.tscn" id="2_johh4"]
-[ext_resource type="Texture2D" uid="uid://dbj2jcadahqg1" path="res://textures/Basic_Grass_Biom_things.png" id="4_12eow"]
+[ext_resource type="Texture2D" uid="uid://dmken1peihex5" path="res://textures/Basic_Grass_Biom_things.png" id="4_12eow"]
 [ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="4_dy85o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xykto"]
@@ -27,15 +27,19 @@ region_rect = Rect2(16.42739, 47.04315, 15.759844, 16.894554)
 shape = SubResource("CapsuleShape2D_xykto")
 
 [node name="Point1" type="Marker2D" parent="."]
+z_index = 3
 position = Vector2(-5, -4)
 
 [node name="Point2" type="Marker2D" parent="."]
+z_index = 3
 position = Vector2(5, -1)
 
 [node name="Point3" type="Marker2D" parent="."]
+z_index = 3
 position = Vector2(-1, 2)
 
 [node name="RespawnTimer" type="Timer" parent="."]
+wait_time = 5.0
 
 [node name="DetectionZone" type="Area2D" parent="."]
 

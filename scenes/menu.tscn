@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://d2xti5v10n7xc" path="res://assets/Tilesets/Hills.png" id="7_i6lef"]
 [ext_resource type="StyleBox" uid="uid://b3yc22aco1kbc" path="res://res/button_pressed_style.tres" id="7_mj5lg"]
 [ext_resource type="AudioStream" uid="uid://d3811vy3xe68s" path="res://assets/sounds/click.wav" id="12_6cdou"]
-[ext_resource type="AudioStream" uid="uid://bj651tbi2rjyt" path="res://assets/sounds/menu_theme.wav" id="12_ufwb2"]
+[ext_resource type="AudioStream" uid="uid://xq13ky5ukxr1" path="res://assets/sounds/menu_theme.ogg" id="13_6cdou"]
 
 [sub_resource type="GDScript" id="GDScript_mj5lg"]
 script/source = "extends CharacterBody2D
@@ -455,7 +455,7 @@ tile_set = SubResource("TileSet_6cdou")
 stream = ExtResource("12_6cdou")
 
 [node name="MenuTheme" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("12_ufwb2")
+stream = ExtResource("13_6cdou")
 autoplay = true
 
 [connection signal="pressed" from="MenuUI/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

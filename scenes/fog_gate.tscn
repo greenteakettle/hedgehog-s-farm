@@ -161,7 +161,7 @@ size = Vector2(128, 96)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aixac"]
 size = Vector2(20.942825, 21.23755)
 
-[node name="FogGate" type="Node2D"]
+[node name="FogGate" type="Node2D" groups=["persisted_items"]]
 z_index = 5
 script = ExtResource("1_7xtqo")
 
@@ -208,6 +208,12 @@ text = "\"\""
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="ItemsList" type="VBoxContainer" parent="BuyingZone"]
+offset_left = -20.0
+offset_top = -19.0
+offset_right = 20.0
+offset_bottom = 21.0
 
 [node name="OpenSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_7xtqo")

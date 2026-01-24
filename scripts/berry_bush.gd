@@ -5,12 +5,11 @@ extends Node2D
 
 @onready var spawn_points = [$Point1, $Point2, $Point3]
 @onready var timer = $RespawnTimer
-@onready var label = $E_Indicator # Ссылка на общую надпись
-
-
+@onready var label = $E_Indicator 
 
 var active_clusters = []
-var player_is_near: bool = false # Стоит ли еж у куста?
+var player_is_near: bool = false 
+var is_active: bool = false # <--- 1. Куст изначально спит
 
 func _ready():
 	timer.wait_time = respawn_time
@@ -18,20 +17,33 @@ func _ready():
 	if not timer.timeout.is_connected(_on_respawn_timer_timeout):
 		timer.timeout.connect(_on_respawn_timer_timeout)
 	
-	label.visible = false # Прячем надпись на старте
-	spawn_all_clusters()
+	label.visible = false 
+	# spawn_all_clusters() <--- 2. УБРАЛИ ЭТО! Куст рождается пустым.
+
+# --- ЭТУ ФУНКЦИЮ ВЫЗОВЕТ ТРИГГЕР ---
+func start_growing_cycle():
+	if is_active: return
+	
+	is_active = true
+	call_deferred("spawn_all_clusters")
+	print("Куст активирован!")
 
 func _process(_delta):
+	# Если куст "спит", мы ничего не делаем и не показываем
+	if not is_active:
+		return
+
 	clean_up_list()
 	
-	# 1. Логика респавна (если пусто - запускаем таймер)
+	# 3. Логика респавна
+	# Таймер запускается только если куст АКТИВЕН, пуст и таймер стоит
 	if active_clusters.size() == 0 and timer.is_stopped():
+		print("Куст пуст, запускаем таймер респавна...")
 		timer.start()
-		label.visible = false # Если ягод нет, надпись точно не нужна
+		label.visible = false 
 
-	# 2. Логика Надписи
+	# 4. Логика Надписи
 	if player_is_near:
-		# Проверяем, есть ли хоть одна спелая ягода
 		if has_ripe_berries():
 			label.visible = true
 		else:
@@ -42,9 +54,10 @@ func _process(_delta):
 # Пробегаем по всем ягодам и спрашиваем "Ты созрела?"
 func has_ripe_berries() -> bool:
 	for berry in active_clusters:
-		# is_ready_to_harvest - это переменная из скрипта ягоды
-		if berry.is_ready_to_harvest:
-			return true
+		# Проверка на null (на всякий случай, если ягоду удалили)
+		if is_instance_valid(berry) and "is_ready_to_harvest" in berry:
+			if berry.is_ready_to_harvest:
+				return true
 	return false
 
 func _on_respawn_timer_timeout():

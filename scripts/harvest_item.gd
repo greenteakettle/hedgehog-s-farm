@@ -29,8 +29,16 @@ func _ready():
 
 
 func _on_body_entered(body):
-	if body.name == "Hedgehog" and can_be_picked_up:
-		if crop_data != null:
-			get_tree().call_group("inventory", "add_item", crop_data)
-			Global.hedgehog.pick_up_sound()
-			queue_free()
+	if body.name == "Hedgehog":
+		var inventory = get_tree().get_first_node_in_group("inventory")
+		
+		if inventory:
+			# Теперь мы сохраняем ответ инвентаря в переменную result
+			var result = inventory.add_item(crop_data)
+			
+			if result == true:
+				# Инвентарь сказал "Ок", удаляемся с земли
+				queue_free()
+			else:
+				# Инвентарь сказал "False" (полон), мы остаемся лежать
+				print("Не влезает!")

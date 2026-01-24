@@ -46,22 +46,25 @@ func update_selection_visuals():
 			slots[i].set_selected(i == selected_slot_index)
 
 
-func add_item(data: CropData):
-	# 1. Ищем слот с таким же предметом
+func add_item(data: CropData) -> bool:
+	# 1. Ищем слот с таким же предметом (для стака)
 	for slot in slots:
+		# Проверяем: это тот же предмет? И есть ли место в стаке (меньше 5)?
 		if slot.my_crop_data == data and slot.count < 5:
 			slot.update_slot_with_data(data, slot.count + 1)
-			update_player_visuals() # Обновляем вид, если добавили в текущий слот
-			return
-
+			update_player_visuals()
+			return true # УСПЕХ: Мы добавили предмет
+			
 	# 2. Ищем пустой слот
 	for slot in slots:
 		if slot.my_crop_data == null:
 			slot.update_slot_with_data(data, 1)
-			update_player_visuals() # Обновляем вид
-			return
+			update_player_visuals()
+			return true # УСПЕХ: Мы заняли новый слот
 			
+	# 3. Если цикл закончился, а место не нашлось
 	print("Инвентарь полон!")
+	return false # ПРОВАЛ: Места нет
 
 func get_selected_crop_data_and_decrease() -> CropData:
 	var current_slot = slots[selected_slot_index]
