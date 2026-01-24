@@ -4,8 +4,8 @@
 
 > Play the game in your browser here: **(https://greenteakettle.itch.io/hedgehogs-farm)**
 
-<img width="1018" height="572" alt="Снимок экрана 2026-01-24 194452" src="https://github.com/user-attachments/assets/cfcc505c-fcd0-4401-ad9e-a9351d2fd5b9" />
-<img width="1021" height="574" alt="Снимок экрана 2026-01-24 192216" src="https://github.com/user-attachments/assets/7c0da5ac-8444-42af-bcef-74a583446fd7" />
+<img width="821" height="456" alt="Снимок экрана 2026-01-24 194452" src="https://github.com/user-attachments/assets/cfcc505c-fcd0-4401-ad9e-a9351d2fd5b9" />
+<img width="821" height="456" alt="Снимок экрана 2026-01-24 192216" src="https://github.com/user-attachments/assets/7c0da5ac-8444-42af-bcef-74a583446fd7" />
 <img width="821" height="456" alt="Снимок экрана 2026-01-24 194752" src="https://github.com/user-attachments/assets/611fe815-b831-492e-81d4-c18fb9e0ba1c" />
 
 
