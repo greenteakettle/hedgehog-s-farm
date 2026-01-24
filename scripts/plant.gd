@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var harvest_scene: PackedScene # Сцена предмета (мешочка/овоща), который выпадает
+@export var harvest_scene: PackedScene 
 @export var growth_time: float = 3.0
 
 var current_crop_data = null
@@ -9,7 +9,7 @@ var growth_frames: int = 3
 var timer: Timer
 
 @onready var crop_sprite = $CropSprite
-@onready var harvest_spawn_point = $HarvestSpawnPoint # Точка спавна (если есть)
+@onready var harvest_spawn_point = $HarvestSpawnPoint 
 @onready var appear_sound = $AppearSound
 
 func _ready():
@@ -34,9 +34,9 @@ func _on_grow():
 			if get_parent().has_method("_update_ui"):
 				get_parent()._update_ui()
 
-# --- ВОТ ТУТ МЫ ИСПРАВИЛИ ЛОГИКУ ВЫПАДЕНИЯ ---
+
 func harvest():
-	# Защита от двойного сбора (если игрок будет спамить кнопку E)
+
 	if not visible: 
 		return
 
@@ -44,38 +44,30 @@ func harvest():
 		queue_free()
 		return
 	
-	# 1. Играем звук
 	if appear_sound:
 		appear_sound.play()
 	
-	# 2. Спавним предметы
 	if current_crop_data.produce_data:
 		_spawn_drop(current_crop_data.produce_data, Vector2(15, -20))
 	
 	_spawn_drop(current_crop_data, Vector2(-15, -20))
 
-	# 3. ПРЯЧЕМ растение (визуально оно исчезло)
 	visible = false 
 	
-	# 4. Ждем, пока звук доиграет до конца
 	if appear_sound:
 		await appear_sound.finished
 	
-	# 5. Теперь удаляем узел по-настоящему
 	queue_free()
 
-# Вспомогательная функция, чтобы создавать предметы
+
 func _spawn_drop(item_data, offset: Vector2):
 	var drop = harvest_scene.instantiate()
 	
-	# Выбираем позицию
 	var spawn_pos = global_position
 	if harvest_spawn_point:
 		spawn_pos = harvest_spawn_point.global_position
 	
-	# Применяем позицию + сдвиг (чтобы предметы не падали в одну точку)
 	drop.global_position = spawn_pos + offset
-	# Передаем данные предмету
 	drop.crop_data = item_data
 	
 	get_tree().current_scene.add_child(drop)
@@ -92,13 +84,14 @@ func _update_visuals():
 		crop_sprite.frame = stage
 		crop_sprite.pause()
 
-# --- СОХРАНЕНИЕ ---
+
 func get_save_data():
 	return {
 		"stage": stage,
 		"time_left": timer.time_left,
 		"crop_path": current_crop_data.resource_path if current_crop_data else ""
 	}
+
 
 func restore_state(data):
 	stage = int(data.get("stage", 0))

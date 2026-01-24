@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://0i2mstb1x56u" path="res://scripts/plant.gd" id="1_a88lo"]
 [ext_resource type="PackedScene" uid="uid://cnsp0isdo0q2c" path="res://scenes/harvest_item.tscn" id="2_toh6u"]
 [ext_resource type="Texture2D" uid="uid://bbh31cswjbk23" path="res://textures/Basic_Plants.png" id="3_m5w0e"]
-[ext_resource type="Texture2D" uid="uid://dbj2jcadahqg1" path="res://textures/Basic_Grass_Biom_things.png" id="3_ptog4"]
+[ext_resource type="Texture2D" uid="uid://dmken1peihex5" path="res://textures/Basic_Grass_Biom_things.png" id="3_ptog4"]
 [ext_resource type="AudioStream" uid="uid://boj4p0l1015pa" path="res://assets/sounds/pop_out.wav" id="6_ptog4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2riao"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://bcnxaan4nj7q6"]
 
 [ext_resource type="Script" uid="uid://bce44k2pwch4n" path="res://scripts/fog_gate.gd" id="1_7xtqo"]
-[ext_resource type="FontFile" uid="uid://d3vj3b8k1uvqm" path="res://assets/fonts/ByteBounce.ttf" id="2_7xtqo"]
+[ext_resource type="LabelSettings" uid="uid://bnbbf5qyqspbp" path="res://textures/pixel_font_style.tres" id="2_7xtqo"]
 [ext_resource type="AudioStream" uid="uid://b0dlpu5udwnvq" path="res://assets/sounds/unlock.ogg" id="3_7xtqo"]
 
 [sub_resource type="Shader" id="Shader_7xtqo"]
@@ -164,6 +164,7 @@ size = Vector2(20.942825, 21.23755)
 [node name="FogGate" type="Node2D" groups=["persisted_items"]]
 z_index = 5
 script = ExtResource("1_7xtqo")
+font_style = ExtResource("2_7xtqo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 light_mask = 3
@@ -188,32 +189,12 @@ position = Vector2(0, 64)
 scale = Vector2(1.7189658, 1.4596785)
 shape = SubResource("RectangleShape2D_aixac")
 
-[node name="Label" type="Label" parent="BuyingZone"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -19.0
-offset_right = 34.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.6512814, 0.42647013)
-theme_override_colors/font_shadow_color = Color(0.3019608, 0.3019608, 0.3019608, 1)
-theme_override_constants/line_spacing = 0
-theme_override_fonts/font = ExtResource("2_7xtqo")
-text = "\"\""
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
 [node name="ItemsList" type="VBoxContainer" parent="BuyingZone"]
-offset_left = -20.0
-offset_top = -19.0
-offset_right = 20.0
+offset_left = -9.999998
+offset_top = -8.999999
+offset_right = 26.000002
 offset_bottom = 21.0
+scale = Vector2(0.54564804, 0.5914805)
 
 [node name="OpenSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_7xtqo")

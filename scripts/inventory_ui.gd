@@ -6,13 +6,11 @@ var selected_slot_index: int = 0
 
 func _ready():
 	for i in $Slots.get_children():
-		# Используем безопасный вызов, если метод существует
 		if i.has_method("update_slot_with_data"):
 			i.update_slot_with_data(null, 0)
 	
 	update_selection_visuals()
-	
-	# Ждем кадр, чтобы ежик успел загрузиться, и обновляем его вид
+
 	await get_tree().process_frame
 	update_player_visuals()
 
@@ -34,7 +32,9 @@ func _input(event):
 		selected_slot_index = 4
 		changed = true
 	
-	# Если слот изменился, обновляем рамку и ежика
+	if event.is_action_pressed("drop_item"): 
+		drop_selected_item()	
+	
 	if changed:
 		update_selection_visuals()
 		update_player_visuals()
@@ -47,24 +47,24 @@ func update_selection_visuals():
 
 
 func add_item(data: CropData) -> bool:
-	# 1. Ищем слот с таким же предметом (для стака)
+
 	for slot in slots:
-		# Проверяем: это тот же предмет? И есть ли место в стаке (меньше 5)?
+
 		if slot.my_crop_data == data and slot.count < 5:
 			slot.update_slot_with_data(data, slot.count + 1)
 			update_player_visuals()
-			return true # УСПЕХ: Мы добавили предмет
+			return true 
 			
-	# 2. Ищем пустой слот
+
 	for slot in slots:
 		if slot.my_crop_data == null:
 			slot.update_slot_with_data(data, 1)
 			update_player_visuals()
-			return true # УСПЕХ: Мы заняли новый слот
+			return true 
 			
-	# 3. Если цикл закончился, а место не нашлось
+
 	print("Инвентарь полон!")
-	return false # ПРОВАЛ: Места нет
+	return false 
 
 func get_selected_crop_data_and_decrease() -> CropData:
 	var current_slot = slots[selected_slot_index]
@@ -79,73 +79,100 @@ func get_selected_crop_data_and_decrease() -> CropData:
 		else:
 			current_slot.update_slot_with_data(current_slot.my_crop_data, current_slot.count)
 		
-		# Обновляем ежика (вдруг предмет кончился)
 		update_player_visuals()
 			
 		return data_to_return
 		
 	return null
 
-# Исправленная функция без лишних отступов и символов
+
 func update_player_visuals():
 	var player = get_tree().get_first_node_in_group("player")
 	
-	# Проверяем, существует ли игрок и скрипт на нем
 	if not player or not player.has_method("update_held_item"):
 		return
 
 	var current_slot = slots[selected_slot_index]
 	
-	# Если в слоте есть предмет
+
 	if current_slot.count > 0 and current_slot.my_crop_data != null:
-		# Отправляем Ёжику иконку этого предмета
 		player.update_held_item(current_slot.my_crop_data.inventory_icon)
 	else:
-		# Слот пуст - говорим Ёжику спрятать предмет
 		player.update_held_item(null)
 	
 func add_item_force(data: CropData, amount: int):
-	# Ищем пустой слот
+
 	for slot in slots:
 		if slot.my_crop_data == null:
 			slot.update_slot_with_data(data, amount)
 			return
-# --- НОВЫЕ ФУНКЦИИ ДЛЯ ТУМАНА (Вставить в конец inventory_ui.gd) ---
 
-# 1. Считаем общее количество конкретного предмета во всех слотах
+
 func get_item_count(target_name: String) -> int:
 	var total = 0
 	for slot in slots:
-		# Проверяем, есть ли предмет в слоте
 		if slot.my_crop_data != null:
-			# ВАЖНО: Убедись, что в ресурсе CropData есть поле crop_name (или name)
-			# Если у тебя переменная называется name, замени crop_name на name
+
 			if slot.my_crop_data.crop_name == target_name:
 				total += slot.count
 	return total
 
-# 2. Забираем предметы из слотов (для оплаты)
+
 func remove_item_by_name(target_name: String, amount_needed: int):
 	var left_to_remove = amount_needed
 	
 	for slot in slots:
-		# Если нашли нужный предмет
 		if slot.my_crop_data != null and slot.my_crop_data.crop_name == target_name:
 			
 			if slot.count > left_to_remove:
-				# В слоте больше, чем нужно. Отнимаем часть.
 				var new_count = slot.count - left_to_remove
 				slot.update_slot_with_data(slot.my_crop_data, new_count)
 				left_to_remove = 0
-				break # Всё оплатили, выходим
+				break 
 				
 			else:
-				# В слоте меньше или ровно. Забираем всё и ищем дальше.
+
 				left_to_remove -= slot.count
-				slot.update_slot_with_data(null, 0) # Очищаем слот повністю
+				slot.update_slot_with_data(null, 0) 
 				
 			if left_to_remove <= 0:
 				break
 
-	# Обновляем внешний вид ежа (вдруг мы забрали то, что он держал в руках)
 	update_player_visuals()
+	
+func drop_selected_item():
+	var current_slot = slots[selected_slot_index]
+
+	if current_slot.my_crop_data != null and current_slot.count > 0:
+		var data_to_drop = current_slot.my_crop_data
+		
+		var new_count = current_slot.count - 1
+		if new_count <= 0:
+			current_slot.update_slot_with_data(null, 0)
+		else:
+			current_slot.update_slot_with_data(data_to_drop, new_count)
+		
+		update_player_visuals()
+		spawn_drop_in_world(data_to_drop)
+
+
+func spawn_drop_in_world(data: CropData):
+	var player = get_tree().get_first_node_in_group("player")
+	if not player: return
+	
+	var drop_scene = load("res://scenes/harvest_item.tscn") 
+	var drop_instance = drop_scene.instantiate()
+	drop_instance.crop_data = data
+
+	var drop_offset = Vector2(0, 15) 
+	var target_pos = player.global_position + drop_offset
+
+	var y_sort = get_tree().current_scene.get_node_or_null("YSortLayer")
+	
+	if y_sort:
+		y_sort.add_child(drop_instance)
+	else:
+		get_tree().current_scene.add_child(drop_instance)
+	
+	drop_instance.global_position = target_pos
+	drop_instance.z_index = 5

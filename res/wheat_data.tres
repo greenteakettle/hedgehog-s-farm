@@ -8,6 +8,7 @@
 script = ExtResource("1_pwsrx")
 crop_name = "Wheat Seeds"
 inventory_icon = ExtResource("1_pk5ot")
+is_seed = true
 animation_name = "wheat_grow"
 produce_data = ExtResource("2_3ffkp")
 metadata/_custom_type_script = "uid://cmupnbl8tti1b"

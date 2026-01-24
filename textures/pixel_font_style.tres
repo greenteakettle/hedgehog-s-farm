@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bnbbf5qyqspbp"]
+
+[ext_resource type="FontFile" uid="uid://siwcrakg253u" path="res://assets/fonts/pixelFont-7-8x14-sproutLands.ttf" id="1_1rlqe"]
+
+[resource]
+font = ExtResource("1_1rlqe")
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.34901962)

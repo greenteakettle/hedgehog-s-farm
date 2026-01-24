@@ -1,19 +1,11 @@
 extends Area2D
 
-# 1. Черный квадрат для затемнения
 @export var transition_screen: ColorRect
-
-# 2. Весь слой интерфейса (Инвентарь, кнопки и т.д.)
 @export var ui_layer: CanvasLayer
-
 @onready var e_label = $E_Indicator
-
-# 3. Путь к сцене конца игры
 @export var end_scene_path: String = "res://scenes/end_game.tscn"
 
-# --- НАСТРОЙКИ ---
-var anim_node_name = "AnimatedSprite2D" # Имя узла анимации у ежика
-
+var anim_node_name = "AnimatedSprite2D" 
 var player_ref = null
 var is_sleeping = false
 
@@ -37,52 +29,42 @@ func _on_body_exited(body):
 		e_label.visible = false
 
 func go_to_sleep():
-	print("--- НАЧАЛО СЦЕНЫ СНА ---")
+	print("Sleep scene is starting")
 	is_sleeping = true
 	e_label.visible = false
 	
-	# 1. Прячем ВЕСЬ интерфейс (Инвентарь)
 	if ui_layer:
 		ui_layer.visible = false
-	else:
-		print("Внимание: UI_Layer не привязан! Инвентарь останется виден.")
 
-	# 2. Ставим ежика на точку
+
 	if has_node("SleepPoint"):
 		player_ref.global_position = $SleepPoint.global_position
 	else:
 		player_ref.global_position = global_position
 	
-	# 3. Отключаем управление и прячем предмет в руках
 	player_ref.set_physics_process(false)
 	var item_sprite = player_ref.get_node_or_null("HeldItemSprite")
 	if item_sprite: item_sprite.visible = false
 	
-	# 4. Анимация сна
 	var anim_sprite = player_ref.get_node_or_null(anim_node_name)
 	if anim_sprite:
 		anim_sprite.play("sleep")
 	
-	# 5. Сценарий финала
 	if transition_screen:
+		
 		var tween = create_tween()
-		print("Ждем 3 секунды...")
-		tween.tween_interval(3.0) # Смотрим как спит
-		
-		print("Начинаем затемнение...")
-		
-		# Делаем экран черным
+		tween.tween_interval(3.0) 
 		tween.tween_property(transition_screen, "modulate:a", 1.0, 2.0)
 	
-		
-		# Меняем сцену
+		for n in get_tree().get_nodes_in_group("notifications"):
+			var t = create_tween()
+			t.tween_property(n, "modulate:a", 0.0, 1.0)
+
 		tween.finished.connect(_change_scene)
+		
 	else:
-		print("ОШИБКА: Transition Screen (черный квадрат) не привязан!")
-		print("Переход произойдет резко через 3 секунды.")
 		await get_tree().create_timer(3.0).timeout
 		_change_scene()
 
 func _change_scene():
-	print("Переход на финальную сцену!")
 	get_tree().change_scene_to_file(end_scene_path)

@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://q0ykw1u47ni6" path="res://textures/hedgehog.tres" id="4_cfvfy"]
 [ext_resource type="AudioStream" uid="uid://dikf6e1ptjy8r" path="res://assets/sounds/notification.wav" id="5_cfvfy"]
 
-[node name="StoryNotification" type="Control"]
+[node name="StoryNotification" type="Control" groups=["notifications"]]
 custom_minimum_size = Vector2(300, 95)
 layout_mode = 3
 anchors_preset = 0

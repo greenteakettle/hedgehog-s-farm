@@ -2013,14 +2013,14 @@ y_sort_enabled = true
 position = Vector2(400, 298)
 
 [node name="EggplantSeeds" parent="YSortLayer/Items" instance=ExtResource("19_gqmmt")]
-position = Vector2(441, 97)
+position = Vector2(461, 116)
 crop_data = ExtResource("20_yc10j")
 
 [node name="Entities" type="Node2D" parent="YSortLayer"]
 
 [node name="Hedgehog" parent="YSortLayer/Entities" node_paths=PackedStringArray("tile_map") instance=ExtResource("14_a8y0u")]
 z_index = 100
-position = Vector2(366, 319)
+position = Vector2(337, 333)
 scale = Vector2(0.9863848, 0.9863848)
 autonomous_speed = 50
 player_speed = 50
@@ -2107,7 +2107,7 @@ z_index = 15
 light_mask = 3
 visibility_layer = 3
 z_index = 15
-position = Vector2(366, 323)
+position = Vector2(337, 336)
 story_lines = Array[String](["Hi there! My name is Hedgehog.", "This farm is huge! Please help me find my cozy home.", "I see a garden bed! Let's plant some wheat."])
 trigger_id = "welcome_trigger"
 
@@ -2128,7 +2128,7 @@ unlock_gardening_mechanic = true
 
 [node name="StoryTrigger4" parent="Logic & Triggers/StoryTriggers" instance=ExtResource("26_vxglm")]
 z_index = 10
-position = Vector2(441.00003, 97)
+position = Vector2(461, 116)
 scale = Vector2(0.73003966, 0.76086664)
 story_lines = Array[String](["New seeds! I wonder what they grow into!"])
 trigger_id = "new_seeds"
@@ -2148,14 +2148,6 @@ position = Vector2(690, 174)
 scale = Vector2(1.6141694, 1.5023712)
 story_lines = Array[String](["Yay! Home sweet home!", "Thanks for your help! ", "It's been a long day... let's get some sleep."])
 trigger_id = "home"
-unlock_gardening_mechanic = true
-
-[node name="StoryTrigger7" parent="Logic & Triggers/StoryTriggers" instance=ExtResource("26_vxglm")]
-z_index = 10
-position = Vector2(824, 129)
-scale = Vector2(0.5118439, 0.46968523)
-story_lines = Array[String](["See you soon!"])
-trigger_id = "end"
 unlock_gardening_mechanic = true
 
 [node name="GrowthTrigger_Island2" type="Area2D" parent="Logic & Triggers"]

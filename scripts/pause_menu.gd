@@ -6,10 +6,9 @@ extends CanvasLayer
 @onready var click_sound = $ClickSound
 
 func _ready():
-	visible = false # Спрятать меню при старте
+	visible = false 
 
 func _input(event):
-	# Если нажали ESC
 	if event.is_action_pressed("ui_cancel"):
 		print("КНОПКА ESC НАЖАТА! (Скрипт работает)")
 		toggle_pause()
@@ -17,21 +16,21 @@ func _input(event):
 
 func toggle_pause():
 	visible = not visible
-	get_tree().paused = visible # Ставим игру на ПАУЗУ (физика и таймеры остановятся)
+	get_tree().paused = visible # 
 
 func _on_resume_pressed():
 	click_sound.play()
-	toggle_pause() # Просто снимаем паузу
+	toggle_pause() 
 
 func _on_save_pressed():
 	click_sound.play()
-	Global.save_game() # Зовем наш глобальный скрипт!
-	# Можно добавить надпись "Saved!"
+	Global.save_game() 
 
 func _on_quit_pressed():
 	click_sound.play()
-	toggle_pause() # Снимаем паузу перед выходом
-	get_tree().change_scene_to_file("res://scenes/menu.tscn") # Возврат в главное меню
+	toggle_pause() 
+	Global.clear_ui() 
+	get_tree().change_scene_to_file("res://scenes/menu.tscn") 
 
 func _on_resume_button_pressed() -> void:
-	pass # Replace with function body.
+	pass 

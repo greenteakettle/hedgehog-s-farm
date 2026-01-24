@@ -1,4 +1,3 @@
-# item_slot.gd
 extends Control
 
 @onready var icon = $Slot/ItemTexture
@@ -32,9 +31,9 @@ func update_slot_with_data(data: CropData, new_count: int):
 		visible = true
 		
 		if count > 1:
-			label.visible = true  # Показываем, если 2, 3...
+			label.visible = true  
 		else:
-			label.visible = false # Прячем, если 1		
+			label.visible = false 
 
 func set_selected(is_selected: bool):
 	if selection_border:
