@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=15 format=3 uid="uid://cgc8ghnwfyd3l"]
+[gd_resource type="TileSet" format=3 uid="uid://cgc8ghnwfyd3l"]
 
 [ext_resource type="Texture2D" uid="uid://cm013tla647rc" path="res://textures/Basic_Furniture.png" id="1_3gnuf"]
 [ext_resource type="Texture2D" uid="uid://c4eycyr133e2c" path="res://assets/Objects/Wood_Bridge.png" id="2_pfxqh"]
